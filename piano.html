@@ -99,7 +99,7 @@ footer a { color: inherit; }
       <li><span class="n">3</span><div><b>Dove farti vedere</b><span>Le posizioni e i formati adatti, ognuno con il suo motivo.</span></div></li>
       <li><span class="n">4</span><div><b>Tre scenari</b><span>Tre livelli di investimento. Scegli tu se e quale.</span></div></li>
     </ul>
-    <p class="come"><b>Lo prepariamo noi, in pochi giorni.</b> Poi lo vediamo insieme nel tuo studio, in trenta minuti. Non ti impegna a nulla.</p>
+    <p class="come"><b>Ci lavoriamo noi e te lo mandiamo entro 3 giorni lavorativi.</b> Non ti impegna a nulla.</p>
   </div>
 </section>
 
@@ -131,7 +131,7 @@ footer a { color: inherit; }
           </div>
         </div>
       </div>
-      <label class="consenso"><input type="checkbox" id="c_ricontatto" name="consenso_ricontatto" required><span><b>Voglio ricevere il piano strategico gratuito</b> ed essere ricontattato da CSA per vederlo insieme.</span></label>
+      <label class="consenso"><input type="checkbox" id="c_ricontatto" name="consenso_ricontatto" required><span><b>Voglio ricevere il piano strategico gratuito</b> ed essere ricontattato da CSA per parlarne.</span></label>
       <label class="consenso"><input type="checkbox" name="consenso_marketing"><span>Facoltativo. Accetto di ricevere da CSA aggiornamenti e proposte commerciali.</span></label>
       <p class="info">Titolare del trattamento: C.S.A. S.r.l., Andria (BT). <a href="#" id="linkPrivacy">Informativa privacy</a>.</p>
       <p class="errore" id="errore" role="alert"></p>
@@ -140,8 +140,8 @@ footer a { color: inherit; }
 
     <div id="grazie" role="status" aria-live="polite" tabindex="-1">
       <h3>Fatto. <span class="m">Il tuo piano è in preparazione.</span></h3>
-      <p>Ti chiamiamo <b>entro venerdì 27 novembre</b><span id="g_fascia"></span> per decidere quando vederlo insieme nel tuo studio.</p>
-      <p>Non hai ancora lo studio «Come i pazienti scelgono il loro dentista di fiducia»? <a href="./" style="color:var(--p1);font-weight:700">Scaricalo gratis qui</a>.</p>
+      <p><b>Ci stiamo già lavorando:</b> te lo mandiamo entro 3 giorni lavorativi. Se ci serve qualche dettaglio, ti chiamiamo<span id="g_fascia"></span>.</p>
+      <p>Non hai ancora la guida «Come i pazienti scelgono il loro dentista di fiducia»? <a href="./" style="color:var(--p1);font-weight:700">Scaricala gratis qui</a>.</p>
     </div>
   </div>
 </section>
@@ -156,7 +156,7 @@ footer a { color: inherit; }
 <script>
 const HUBSPOT = {
   portalId: "145641356",
-  moduloStudio: "325e79c8-0339-4b49-8595-498d0d45ba25", // Dentalevante 2026 · Landing 1 · Scarica lo studio
+  moduloStudio: "325e79c8-0339-4b49-8595-498d0d45ba25", // Dentalevante 2026 · Landing 1 · Scarica la guida
   moduloPiano: "ba811dc5-2bdd-489e-9659-ebe8396bdb22"   // Dentalevante 2026 · Landing 2 · Richiedi il piano
 };
 function cookie(n) { const m = document.cookie.match(new RegExp("(?:^|; )" + n + "=([^;]*)")); return m ? m[1] : ""; }
@@ -219,7 +219,7 @@ modulo.addEventListener("submit", async function (e) {
   const b = document.getElementById("invia"); b.disabled = true; b.textContent = "Invio in corso…";
   try {
     await inviaHubSpot(HUBSPOT.moduloPiano, dati, ["Richiesta del piano strategico gratuito", "Tipo di studio: " + (dati.tipo || "non indicato"), "Fascia oraria preferita: " + (dati.fascia || "non indicata")].concat(righeComuni(dati)));
-    if (dati.fascia) document.getElementById("g_fascia").textContent = ", in " + dati.fascia + ",";
+    if (dati.fascia) document.getElementById("g_fascia").textContent = " in " + dati.fascia;
     modulo.style.display = "none";
     const g = document.getElementById("grazie"); g.classList.add("on"); g.focus();
     g.scrollIntoView({ behavior: "smooth", block: "center" });
