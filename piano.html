@@ -6,6 +6,14 @@
 <title>Il piano strategico del tuo studio · gratis per Dentalevante · CSA</title>
 <meta name="description" content="Solo per Dentalevante 2026: il piano strategico gratuito del tuo studio. Le strade dei tuoi pazienti, i colleghi intorno, dove farti vedere.">
 <meta name="robots" content="noindex">
+<!--
+  14b · Pagina «Richiedi il piano strategico» · 11/11/2026.
+  Per chi ha già la guida: QR e link di pagina 15 della guida, link nella mail 1 e nella mail 2.
+  Più corta della landing della guida: niente download, solo la richiesta del piano.
+  INVIO: HubSpot (account 145641356, eu1), modulo «Landing 2 · Richiedi il piano».
+  Dopo l'invio va a grazie-piano.html. Codice di tracciamento HubSpot in fondo alla pagina.
+  DA CONFERMARE: link informativa privacy.
+-->
 <style>
 @font-face { font-family: Inter; font-weight: 400; src: url(assets/Inter-Regular.otf); font-display: swap; }
 @font-face { font-family: Inter; font-weight: 500; src: url(assets/Inter-Medium.otf); font-display: swap; }
@@ -66,19 +74,13 @@ input[aria-invalid=true] { border-color: var(--magenta-scuro); }
 .invia { width: 100%; min-height: 60px; border: 0; border-radius: 30px; background: var(--nero); color: #fff; font: 800 18px Inter, sans-serif; margin-top: 20px; cursor: pointer; }
 .invia::after { content: " →"; color: var(--magenta); }
 .invia[disabled] { opacity: .5; }
-#grazie { display: none; background: var(--bianco); border-radius: 22px; padding: 30px 26px; margin-top: 26px; box-shadow: 0 20px 60px rgba(0,0,0,.08); }
-#grazie.on { display: block; }
-#grazie h3 { font-size: 30px; font-weight: 800; letter-spacing: -0.04em; line-height: 1.08; }
-#grazie p { font-size: 17px; color: #3A3A3C; margin-top: 14px; }
-#grazie p b { color: var(--p1); }
 footer { padding: 28px 0 40px; font-size: 13px; color: var(--t3); }
 footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; }
 footer a { color: inherit; }
 @media (max-width: 560px) {
   :root { --gutter: 18px; }
   .campi { grid-template-columns: 1fr; }
-  form, #grazie { padding: 22px 18px; }
-}
+  form, }
 @media (max-width: 380px) { header img { height: 21px; } header .pill { font-size: 10px; padding: 5px 9px; } }
 </style>
 </head>
@@ -138,11 +140,6 @@ footer a { color: inherit; }
       <button class="invia" type="submit" id="invia">Voglio il mio piano</button>
     </form>
 
-    <div id="grazie" role="status" aria-live="polite" tabindex="-1">
-      <h3>Fatto. <span class="m">Il tuo piano è in preparazione.</span></h3>
-      <p><b>Ci stiamo già lavorando:</b> te lo mandiamo entro 3 giorni lavorativi. Se ci serve qualche dettaglio, ti chiamiamo<span id="g_fascia"></span>.</p>
-      <p>Non hai ancora la guida «Come i pazienti scelgono il loro dentista di fiducia»? <a href="./" style="color:var(--p1);font-weight:700">Scaricala gratis qui</a>.</p>
-    </div>
   </div>
 </section>
 
@@ -156,7 +153,6 @@ footer a { color: inherit; }
 <script>
 const HUBSPOT = {
   portalId: "145641356",
-  moduloStudio: "325e79c8-0339-4b49-8595-498d0d45ba25", // Dentalevante 2026 · Landing 1 · Scarica la guida
   moduloPiano: "ba811dc5-2bdd-489e-9659-ebe8396bdb22"   // Dentalevante 2026 · Landing 2 · Richiedi il piano
 };
 function cookie(n) { const m = document.cookie.match(new RegExp("(?:^|; )" + n + "=([^;]*)")); return m ? m[1] : ""; }
@@ -219,15 +215,13 @@ modulo.addEventListener("submit", async function (e) {
   const b = document.getElementById("invia"); b.disabled = true; b.textContent = "Invio in corso…";
   try {
     await inviaHubSpot(HUBSPOT.moduloPiano, dati, ["Richiesta del piano strategico gratuito", "Tipo di studio: " + (dati.tipo || "non indicato"), "Fascia oraria preferita: " + (dati.fascia || "non indicata")].concat(righeComuni(dati)));
-    if (dati.fascia) document.getElementById("g_fascia").textContent = " in " + dati.fascia;
-    modulo.style.display = "none";
-    const g = document.getElementById("grazie"); g.classList.add("on"); g.focus();
-    g.scrollIntoView({ behavior: "smooth", block: "center" });
+    location.href = "grazie-piano.html" + (dati.fascia ? "?fascia=" + encodeURIComponent(dati.fascia) : "");
   } catch (err) {
     errore.textContent = "Non siamo riusciti a inviare la richiesta. Riprova, oppure chiama lo 0883 596630.";
     errore.classList.add("on"); b.disabled = false; b.textContent = "Voglio il mio piano";
   }
 });
 </script>
+<script type="text/javascript" id="hs-script-loader" async defer src="https://js-eu1.hs-scripts.com/145641356.js"></script>
 </body>
 </html>

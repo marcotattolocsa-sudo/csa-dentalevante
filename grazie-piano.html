@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fatto: il tuo piano è in preparazione · CSA</title>
+<meta name="robots" content="noindex">
+<!-- Thank-you della landing 2 (dopo l'invio del modulo «Richiedi il piano»). ?fascia= mostra la fascia oraria scelta. -->
+<style>
+@font-face { font-family: Inter; font-weight: 500; src: url(assets/Inter-Medium.otf); font-display: swap; }
+@font-face { font-family: Inter; font-weight: 700; src: url(assets/Inter-Bold.otf); font-display: swap; }
+@font-face { font-family: Inter; font-weight: 800; src: url(assets/Inter-ExtraBold.otf); font-display: swap; }
+:root { --nero: #050507; --grafite: #1B1B1F; --perla: #F5F5F7; --magenta: #F03587; --magenta-scuro: #D6177A; --ciano: #5ACAF2; --ambra: #F9AF1B; --t3: #8E8E93; --p1: #1D1D1F; --gutter: 22px; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; }
+body { font-family: Inter, "Helvetica Neue", Arial, sans-serif; background: var(--nero); color: #fff; line-height: 1.45; overflow-x: hidden; min-height: 100svh; display: flex; flex-direction: column; }
+.wrap { max-width: 720px; margin: 0 auto; padding: 0 var(--gutter); position: relative; z-index: 1; width: 100%; }
+.glow { position: absolute; border-radius: 50%; filter: blur(110px); pointer-events: none; z-index: 0; }
+header { padding: 22px 0; } header img { height: 24px; }
+main { flex: 1; display: flex; align-items: center; padding: 20px 0 60px; position: relative; overflow: hidden; }
+.ok { display: inline-flex; width: 56px; height: 56px; border-radius: 50%; background: var(--magenta); align-items: center; justify-content: center; font-size: 28px; font-weight: 800; box-shadow: 0 0 30px rgba(240,53,135,.6); }
+h1 { font-size: clamp(40px, 9vw, 72px); font-weight: 800; letter-spacing: -0.045em; line-height: 1.02; margin-top: 26px; }
+h1 span { background: linear-gradient(90deg, var(--ciano), var(--magenta) 52%, var(--ambra)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+p { font-size: clamp(18px, 2.4vw, 21px); color: #D1D1D6; margin-top: 20px; max-width: 560px; }
+p b { color: #fff; }
+.bottone { display: flex; align-items: center; justify-content: center; max-width: 420px; min-height: 60px; border-radius: 30px; background: #fff; color: var(--nero); font-weight: 800; font-size: 18px; text-decoration: none; margin-top: 30px; }
+.bottone::after { content: " ↓"; color: var(--magenta-scuro); white-space: pre; }
+.piccolo { font-size: 15px; color: var(--t3); }
+.piccolo a { color: #fff; font-weight: 700; }
+footer { padding: 28px 0 40px; font-size: 13px; color: var(--t3); }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; }
+footer a { color: inherit; }
+@media (max-width: 600px) { :root { --gutter: 18px; } }
+</style>
+</head>
+<body>
+<header><div class="wrap"><img src="assets/csa_logo_orizzontale_bianco.svg" alt="CSA"></div></header>
+<main>
+  <div class="glow" style="width:520px;height:520px;right:-200px;top:-160px;background:var(--ciano);opacity:.2"></div>
+  <div class="glow" style="width:560px;height:560px;left:-240px;bottom:-280px;background:var(--magenta);opacity:.3"></div>
+  <div class="wrap">
+    <div class="ok" aria-hidden="true">✓</div>
+    <h1>Fatto. <span>Il tuo piano è in preparazione.</span></h1>
+    <p><b>Ci stiamo già lavorando:</b> te lo mandiamo entro 3 giorni lavorativi. Se ci serve qualche dettaglio, ti chiamiamo<span id="g_fascia"></span>.</p>
+    <p class="piccolo">Non hai ancora la guida «Come i pazienti scelgono il loro dentista di fiducia»? <a href="./?utm_source=grazie-piano">Scaricala gratis qui</a>.</p>
+  </div>
+</main>
+<footer>
+  <div class="wrap">
+    <span>C.S.A. S.r.l. · Pubblicità esterna · Andria (BT)</span>
+    <span><a href="https://www.csapubblicita.it">csapubblicita.it</a> · <a href="tel:+390883596630">0883 596630</a></span>
+  </div>
+</footer>
+<script>
+(function () { const f = new URLSearchParams(location.search).get("fascia"); const ok = ["mattina", "pausa pranzo", "fine giornata"];
+  if (f && ok.indexOf(f) > -1) document.getElementById("g_fascia").textContent = " in " + f; })();
+</script>
+<script type="text/javascript" id="hs-script-loader" async defer src="https://js-eu1.hs-scripts.com/145641356.js"></script>
+</body>
+</html>

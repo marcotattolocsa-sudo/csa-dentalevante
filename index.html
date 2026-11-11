@@ -6,6 +6,14 @@
 <title>Come i pazienti scelgono il loro dentista di fiducia · Guida CSA gratuita</title>
 <meta name="description" content="Solo 6 pazienti su 100 scelgono il loro dentista online. Scarica gratis la guida CSA «Come i pazienti scelgono il loro dentista di fiducia».">
 <meta name="robots" content="noindex">
+<!--
+  14 · Landing 1 Dentalevante · v4 (11/11/2026): solo la guida, niente piano.
+  1 Lo shock (6 su 100) → 2 L'anticipo della guida → 3 Scarica gratis (modulo) → grazie.html.
+  Il piano strategico arriva dopo: in fondo alla guida, nella mail 1 e nella landing 2 (piano.html).
+  INVIO: HubSpot (145641356, eu1), modulo «Landing 1 · Scarica la guida». utm_* registrati con il contatto.
+  TRACCIAMENTO: codice HubSpot in fondo alla pagina; la thank-you è una pagina a sé (grazie.html).
+  DA CONFERMARE: link informativa privacy.
+-->
 <style>
 @font-face { font-family: Inter; font-weight: 400; src: url(assets/Inter-Regular.otf); font-display: swap; }
 @font-face { font-family: Inter; font-weight: 500; src: url(assets/Inter-Medium.otf); font-display: swap; }
@@ -70,11 +78,6 @@ label small { font-weight: 500; color: var(--p2); }
 input[type=text], input[type=tel], input[type=email] { width: 100%; min-height: 52px; border: 1.5px solid #D1D1D6; border-radius: 12px; padding: 0 14px; font: 500 16px Inter, sans-serif; color: var(--p1); background: #fff; }
 input:focus { outline: none; border-color: var(--p1); }
 input[aria-invalid=true] { border-color: var(--magenta-scuro); }
-.piano { display: grid; grid-template-columns: 24px 1fr; gap: 12px; align-items: start; margin-top: 20px; padding: 16px; border-radius: 14px; background: #FDF0F6; border: 1.5px solid #F6C6DB; cursor: pointer; }
-.piano input { width: 22px; height: 22px; accent-color: var(--magenta-scuro); margin-top: 2px; }
-.piano b { display: block; font-size: 16px; color: var(--p1); letter-spacing: -0.01em; }
-.piano span span { display: block; font-size: 14px; color: #3A3A3C; margin-top: 3px; line-height: 1.4; }
-.piano .tag { display: inline-block; font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: #fff; background: var(--magenta-scuro); padding: 3px 8px; border-radius: 99px; margin-bottom: 6px; }
 .consenso { display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: start; margin-top: 16px; font-size: 14px; color: #3A3A3C; line-height: 1.4; cursor: pointer; }
 .consenso input { width: 20px; height: 20px; margin-top: 1px; accent-color: var(--p1); }
 .consenso b { color: var(--p1); }
@@ -86,17 +89,6 @@ input[aria-invalid=true] { border-color: var(--magenta-scuro); }
 .invia::after { content: " ↓"; color: var(--magenta); }
 .invia[disabled] { opacity: .5; }
 
-#grazie { display: none; background: var(--bianco); border-radius: 22px; padding: 30px 26px; margin-top: 28px; box-shadow: 0 20px 60px rgba(0,0,0,.08); }
-#grazie.on { display: block; }
-#grazie h3 { font-size: 30px; font-weight: 800; letter-spacing: -0.04em; line-height: 1.08; }
-#grazie p { font-size: 17px; color: #3A3A3C; margin-top: 14px; }
-#grazie p b { color: var(--p1); }
-.scarica { display: flex; align-items: center; justify-content: center; min-height: 58px; border-radius: 29px; background: var(--nero); color: #fff; font-weight: 800; font-size: 17px; text-decoration: none; margin-top: 20px; }
-.scarica::after { content: " ↓"; color: var(--magenta); white-space: pre; }
-#offertaPiano { margin-top: 24px; padding: 20px; border-radius: 16px; background: #FDF0F6; border: 1.5px solid #F6C6DB; }
-#offertaPiano b { font-size: 18px; letter-spacing: -0.02em; display: block; }
-#offertaPiano p { font-size: 15px; margin-top: 6px; }
-#offertaPiano button { width: 100%; min-height: 54px; border: 0; border-radius: 27px; background: var(--magenta-scuro); color: #fff; font: 800 16px Inter, sans-serif; margin-top: 14px; cursor: pointer; }
 
 footer { padding: 28px 0 40px; font-size: 13px; color: var(--t3); }
 footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; }
@@ -107,8 +99,7 @@ footer a { color: inherit; }
   .s2 .griglia { grid-template-columns: 1fr; gap: 28px; }
   .copertina { width: 150px; }
   .campi { grid-template-columns: 1fr; }
-  form, #grazie { padding: 22px 18px; }
-  .s2 { padding: 60px 0; } .s3 { padding: 56px 0 48px; }
+  form,   .s2 { padding: 60px 0; } .s3 { padding: 56px 0 48px; }
   .punti { gap: 4px; }
 }
 @media (max-width: 380px) {
@@ -121,6 +112,7 @@ footer a { color: inherit; }
 
 <div id="anteprima">Anteprima: il modulo non è ancora collegato e non invia dati.</div>
 
+<!-- 1 · LO SHOCK -->
 <section class="s1">
   <div class="glow" style="width:520px;height:520px;right:-200px;top:-140px;background:var(--ciano);opacity:.22"></div>
   <div class="glow" style="width:560px;height:560px;left:-240px;bottom:-280px;background:var(--magenta);opacity:.32"></div>
@@ -135,6 +127,7 @@ footer a { color: inherit; }
   </div>
 </section>
 
+<!-- 2 · L'ANTICIPO DELLO STUDIO -->
 <section class="s2" id="anticipo">
   <div class="glow" style="width:480px;height:480px;right:-220px;bottom:-220px;background:var(--magenta);opacity:.22"></div>
   <div class="wrap">
@@ -155,6 +148,7 @@ footer a { color: inherit; }
   </div>
 </section>
 
+<!-- 3 · SCARICA -->
 <section class="s3" id="scarica">
   <div class="wrap">
     <h2 class="t">Come i pazienti scelgono il loro <span class="m">dentista di fiducia.</span></h2>
@@ -169,7 +163,6 @@ footer a { color: inherit; }
         <div class="largo"><label for="cellulare">Cellulare <small>· ti chiamiamo solo per parlare del tuo studio</small></label><input type="tel" id="cellulare" name="cellulare" autocomplete="tel" inputmode="tel" required></div>
       </div>
 
-      <label class="piano"><input type="checkbox" id="c_piano" name="piano"><span><span class="tag">Solo per Dentalevante 2026</span><b>Voglio anche il piano strategico gratuito del mio studio</b><span>Le strade dei tuoi pazienti, i colleghi intorno, dove farti vedere. Ci lavoriamo noi e te lo mandiamo entro 3 giorni lavorativi, senza impegno.</span></span></label>
 
       <label class="consenso"><input type="checkbox" id="c_ricontatto" name="consenso_ricontatto" required><span><b>Voglio ricevere la guida</b> ed essere ricontattato da CSA per parlarne.</span></label>
       <label class="consenso"><input type="checkbox" name="consenso_marketing"><span>Facoltativo. Accetto di ricevere da CSA aggiornamenti e proposte commerciali.</span></label>
@@ -178,17 +171,6 @@ footer a { color: inherit; }
       <button class="invia" type="submit" id="invia">Scarica gratis la guida</button>
     </form>
 
-    <div id="grazie" role="status" aria-live="polite" tabindex="-1">
-      <h3>Fatto. <span class="m">La guida è nella tua mail.</span></h3>
-      <p>Se non la trovi, controlla la posta indesiderata. Oppure scaricala subito da qui.</p>
-      <a class="scarica" href="assets/guida-csa-come-i-pazienti-scelgono-il-loro-dentista-di-fiducia.pdf" download>Scarica la guida (PDF)</a>
-      <p id="msgPiano" hidden><b>Il piano strategico del tuo studio è in preparazione.</b> Ci stiamo già lavorando: te lo mandiamo entro 3 giorni lavorativi.</p>
-      <div id="offertaPiano" hidden>
-        <b>Solo per Dentalevante: il piano strategico del tuo studio, gratis.</b>
-        <p>Le strade dei tuoi pazienti, i colleghi intorno, dove farti vedere. Ci lavoriamo noi e te lo mandiamo entro 3 giorni lavorativi, senza impegno.</p>
-        <button type="button" id="voglioPiano">Sì, lo voglio</button>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -202,8 +184,7 @@ footer a { color: inherit; }
 <script>
 const HUBSPOT = {
   portalId: "145641356",
-  moduloStudio: "325e79c8-0339-4b49-8595-498d0d45ba25", // Dentalevante 2026 · Landing 1 · Scarica la guida
-  moduloPiano: "ba811dc5-2bdd-489e-9659-ebe8396bdb22"   // Dentalevante 2026 · Landing 2 · Richiedi il piano
+  moduloStudio: "325e79c8-0339-4b49-8595-498d0d45ba25" // Dentalevante 2026 · Landing 1 · Scarica la guida
 };
 function cookie(n) { const m = document.cookie.match(new RegExp("(?:^|; )" + n + "=([^;]*)")); return m ? m[1] : ""; }
 async function inviaHubSpot(modulo, d, righeMessaggio) {
@@ -234,17 +215,11 @@ if (LINK_PRIVACY) document.getElementById("linkPrivacy").href = LINK_PRIVACY;
 
 const q = new URLSearchParams(location.search);
 const provenienza = { utm_source: q.get("utm_source") || "", utm_medium: q.get("utm_medium") || "", utm_campaign: q.get("utm_campaign") || "" };
-if (q.get("piano") === "1") document.getElementById("c_piano").checked = true;
 
 async function invia(dati) {
-  const piano = dati.piano_strategico ? "sì" : "no";
-  await inviaHubSpot(HUBSPOT.moduloStudio, dati, ["Ha scaricato la guida «Come i pazienti scelgono il loro dentista di fiducia»", "Piano strategico richiesto: " + piano].concat(righeComuni(dati)));
-  if (dati.piano_strategico) {
-    await inviaHubSpot(HUBSPOT.moduloPiano, dati, ["Richiesta del piano strategico gratuito (dalla landing della guida)"].concat(righeComuni(dati)));
-  }
+  await inviaHubSpot(HUBSPOT.moduloStudio, dati, ["Ha scaricato la guida «Come i pazienti scelgono il loro dentista di fiducia»"].concat(righeComuni(dati)));
 }
 
-let ultimiDati = null;
 const modulo = document.getElementById("modulo");
 const errore = document.getElementById("errore");
 modulo.addEventListener("submit", async function (e) {
@@ -262,43 +237,27 @@ modulo.addEventListener("submit", async function (e) {
     errore.textContent = bad.length ? "Controlla i campi evidenziati." : "Per mandarti la guida ci serve il consenso.";
     errore.classList.add("on"); if (bad[0]) bad[0].focus(); return;
   }
-  const piano = document.getElementById("c_piano").checked;
-  ultimiDati = Object.assign({
+  const dati = Object.assign({
     nome: document.getElementById("nome").value.trim(),
     email: document.getElementById("email").value.trim(),
     studio: document.getElementById("studio").value.trim(),
     comune: document.getElementById("comune").value.trim(),
     cellulare: document.getElementById("cellulare").value.trim(),
-    piano_strategico: piano,
     consenso_ricontatto: true,
     consenso_marketing: modulo.consenso_marketing.checked,
     fonte: "Dentalevante 2026 · landing guida"
   }, provenienza);
   const b = document.getElementById("invia"); b.disabled = true; b.textContent = "Invio in corso…";
   try {
-    await invia(ultimiDati);
-    modulo.style.display = "none";
-    document.getElementById(piano ? "msgPiano" : "offertaPiano").hidden = false;
-    const g = document.getElementById("grazie"); g.classList.add("on"); g.focus();
-    g.scrollIntoView({ behavior: "smooth", block: "start" });
+    await invia(dati);
+    location.href = "grazie.html";
   } catch (err) {
     errore.textContent = "Non siamo riusciti a inviare la richiesta. Riprova, oppure chiama lo 0883 596630.";
     errore.classList.add("on"); b.disabled = false; b.textContent = "Scarica gratis la guida";
   }
 });
 
-/* chi non aveva spuntato il piano può chiederlo dopo, con un tocco */
-document.getElementById("voglioPiano").addEventListener("click", async function () {
-  this.disabled = true; this.textContent = "Invio in corso…";
-  try {
-    const d2 = Object.assign({}, ultimiDati, { piano_strategico: true, fonte: "Dentalevante 2026 · landing guida · piano chiesto dopo il download" });
-    await inviaHubSpot(HUBSPOT.moduloPiano, d2, ["Richiesta del piano strategico gratuito (chiesto dopo il download della guida)"].concat(righeComuni(d2)));
-    document.getElementById("offertaPiano").hidden = true;
-    document.getElementById("msgPiano").hidden = false;
-  } catch (err) {
-    this.disabled = false; this.textContent = "Riprova";
-  }
-});
 </script>
+<script type="text/javascript" id="hs-script-loader" async defer src="https://js-eu1.hs-scripts.com/145641356.js"></script>
 </body>
 </html>
