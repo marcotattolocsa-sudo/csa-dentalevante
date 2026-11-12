@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Stand Dentalevante · inserimento contatti · CSA</title>
+<meta name="robots" content="noindex, nofollow">
+<!--
+  14c · Pagina INTERNA per gli agenti allo stand · 12/11/2026. Non è linkata da nessuna parte: si apre da
+  https://dentisti.csapubblicita.it/stand.html (salvarla nella schermata Home del telefono).
+  L'agente compila mentre parla con il dentista. Invio a HubSpot sugli stessi moduli delle landing, così partono le mail automatiche:
+    - solo guida  → modulo «Landing 1 · Scarica la guida»  → mail 1 (guida + invito al piano)
+    - guida+piano → modulo «Landing 2 · Richiedi il piano» → mail 2 (piano in preparazione + link alla guida)
+  Gli invii dello stand si distinguono da quelli spontanei per:
+    - pagina di conversione: stand.html?utm_source=stand
+    - campo Messaggio: prima riga «STAND · inserito da <agente>» e «Fonte: Dentalevante 2026 · stand (inserimento agente)».
+  Se manca la rete l'invio resta in coda sul telefono e si reinvia con il pulsante in alto.
+  DA CONFERMARE: link informativa privacy (LINK_PRIVACY).
+-->
+<style>
+@font-face { font-family: Inter; font-weight: 400; src: url(assets/Inter-Regular.otf); font-display: swap; }
+@font-face { font-family: Inter; font-weight: 500; src: url(assets/Inter-Medium.otf); font-display: swap; }
+@font-face { font-family: Inter; font-weight: 600; src: url(assets/Inter-SemiBold.otf); font-display: swap; }
+@font-face { font-family: Inter; font-weight: 700; src: url(assets/Inter-Bold.otf); font-display: swap; }
+@font-face { font-family: Inter; font-weight: 800; src: url(assets/Inter-ExtraBold.otf); font-display: swap; }
+:root { --nero: #050507; --perla: #F5F5F7; --bianco: #fff; --m: #D6177A; --p1: #1D1D1F; --p2: #6E6E73; --linea: #D1D1D6; --gutter: 16px; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; }
+body { font-family: Inter, "Helvetica Neue", Arial, sans-serif; background: var(--perla); color: var(--p1); line-height: 1.4; }
+header { background: var(--nero); color: #fff; padding: 14px var(--gutter); position: sticky; top: 0; z-index: 5; }
+header .riga { max-width: 640px; margin: 0 auto; display: flex; align-items: center; gap: 12px; }
+header img { height: 20px; }
+header .tit { font-size: 13px; font-weight: 700; color: #A1A1A6; letter-spacing: .04em; }
+#coda { margin-left: auto; display: none; background: #F9AF1B; color: #1D1D1F; border: 0; border-radius: 99px; font: 700 13px Inter, sans-serif; padding: 7px 12px; }
+#coda.on { display: inline-block; }
+main { max-width: 640px; margin: 0 auto; padding: 18px var(--gutter) 40px; }
+h1 { font-size: 24px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; }
+.sub { color: var(--p2); font-size: 14px; margin-top: 6px; }
+.card { background: var(--bianco); border-radius: 16px; padding: 16px; margin-top: 14px; }
+.card h2 { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--p2); margin-bottom: 10px; }
+label.campo { display: block; font-size: 13px; font-weight: 600; margin-top: 12px; }
+label.campo:first-of-type { margin-top: 0; }
+input[type=text], input[type=email], input[type=tel], textarea { width: 100%; margin-top: 5px; font: 500 17px Inter, sans-serif; color: var(--p1); background: var(--perla); border: 1.5px solid transparent; border-radius: 10px; padding: 12px; }
+input:focus, textarea:focus { outline: none; border-color: var(--m); background: #fff; }
+input[aria-invalid=true] { border-color: #E5484D; background: #FFF5F5; }
+textarea { min-height: 76px; resize: vertical; }
+.scelte { display: flex; flex-wrap: wrap; gap: 8px; }
+.scelte label { position: relative; }
+.scelte input { position: absolute; opacity: 0; pointer-events: none; }
+.scelte span { display: inline-block; padding: 10px 14px; border-radius: 99px; background: var(--perla); font-size: 15px; font-weight: 600; border: 1.5px solid transparent; }
+.scelte input:checked + span { background: var(--nero); color: #fff; }
+.scelte input:focus-visible + span { border-color: var(--m); }
+.scelte.grandi { flex-direction: column; }
+.scelte.grandi span { display: block; border-radius: 12px; padding: 13px 14px; }
+.scelte.grandi small { display: block; font-weight: 500; font-size: 13px; opacity: .75; margin-top: 2px; }
+.gruppo + .gruppo { margin-top: 14px; }
+.gruppo > p { font-size: 13px; font-weight: 600; margin-bottom: 7px; }
+.cons { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; }
+.cons input { width: 22px; height: 22px; flex: none; margin-top: 1px; accent-color: var(--m); }
+.info { font-size: 12px; color: var(--p2); margin-top: 10px; }
+.info a { color: var(--p2); }
+#errore { display: none; margin-top: 14px; background: #FFF0F0; color: #B4232A; border-radius: 10px; padding: 12px; font-size: 14px; font-weight: 600; }
+#errore.on { display: block; }
+button.invia { width: 100%; margin-top: 16px; font: 800 18px Inter, sans-serif; letter-spacing: -0.01em; color: #fff; background: var(--m); border: 0; border-radius: 14px; padding: 17px; }
+button.invia:disabled { opacity: .6; }
+#fatto { display: none; }
+#fatto.on { display: block; }
+#fatto .ok { width: 52px; height: 52px; border-radius: 50%; background: #2FB36B; color: #fff; font-size: 28px; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+#fatto h1 { margin-top: 14px; }
+#fatto ul { margin: 12px 0 0 18px; font-size: 15px; }
+#fatto li + li { margin-top: 4px; }
+button.nuovo { width: 100%; margin-top: 20px; font: 800 18px Inter, sans-serif; color: #fff; background: var(--nero); border: 0; border-radius: 14px; padding: 17px; }
+.avviso-coda { margin-top: 12px; background: #FFF6E0; border-radius: 10px; padding: 12px; font-size: 14px; }
+</style>
+</head>
+<body>
+<header><div class="riga"><img src="assets/csa_logo_orizzontale_bianco.svg" alt="CSA"><span class="tit">STAND · USO INTERNO</span><button id="coda" type="button"></button></div></header>
+<main>
+
+<form id="modulo" novalidate>
+  <h1>Nuovo contatto</h1>
+  <p class="sub">Compila mentre parli con il dentista. Gli arriva subito la mail giusta.</p>
+
+  <div class="card">
+    <h2>Agente</h2>
+    <label class="campo" for="agente">Il tuo nome</label>
+    <input type="text" id="agente" autocomplete="off" placeholder="Nome e cognome">
+  </div>
+
+  <div class="card">
+    <h2>Dentista</h2>
+    <label class="campo" for="nome">Nome e cognome</label>
+    <input type="text" id="nome" autocomplete="off" autocapitalize="words">
+    <label class="campo" for="nomestudio">Nome dello studio</label>
+    <input type="text" id="nomestudio" autocomplete="off" autocapitalize="words">
+    <label class="campo" for="comune">Comune</label>
+    <input type="text" id="comune" autocomplete="off" autocapitalize="words">
+    <label class="campo" for="cellulare">Cellulare</label>
+    <input type="tel" id="cellulare" autocomplete="off" inputmode="tel">
+    <label class="campo" for="email">Email (gli mandiamo lì la guida)</label>
+    <input type="email" id="email" autocomplete="off" autocapitalize="off" spellcheck="false">
+  </div>
+
+  <div class="card">
+    <h2>Cosa vuole ricevere</h2>
+    <div class="scelte grandi">
+      <label><input type="radio" name="richiesta" value="guida"><span>Solo la guida gratuita<small>Riceve la mail con la guida e l'invito al piano</small></span></label>
+      <label><input type="radio" name="richiesta" value="piano"><span>La guida e il piano strategico gratuito<small>Riceve la mail del piano (con la guida). Piano entro 3 giorni lavorativi</small></span></label>
+    </div>
+    <div class="gruppo" style="margin-top:14px">
+      <p>Guida già data a mano?</p>
+      <div class="scelte"><label><input type="radio" name="amano" value="sì"><span>Sì</span></label><label><input type="radio" name="amano" value="no"><span>No</span></label></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Lo studio</h2>
+    <div class="gruppo">
+      <p>Tipo</p>
+      <div class="scelte"><label><input type="radio" name="tipo" value="catena"><span>Catena</span></label><label><input type="radio" name="tipo" value="studio locale"><span>Studio locale</span></label><label><input type="radio" name="tipo" value="libero professionista"><span>Libero professionista</span></label></div>
+    </div>
+    <div class="gruppo">
+      <p>Sedi</p>
+      <div class="scelte"><label><input type="radio" name="sede" value="una sede"><span>Una sede</span></label><label><input type="radio" name="sede" value="più sedi"><span>Più sedi</span></label><label><input type="radio" name="sede" value="sta aprendo"><span>Sta aprendo</span></label></div>
+    </div>
+    <div class="gruppo">
+      <p>Quando chiamarlo</p>
+      <div class="scelte"><label><input type="radio" name="fascia" value="mattina"><span>Mattina</span></label><label><input type="radio" name="fascia" value="pausa pranzo"><span>Pausa pranzo</span></label><label><input type="radio" name="fascia" value="fine giornata"><span>Fine giornata</span></label></div>
+    </div>
+    <label class="campo" for="note" style="margin-top:14px">Note</label>
+    <textarea id="note" placeholder="Cosa vi siete detti, interesse, prossimo passo"></textarea>
+  </div>
+
+  <div class="card">
+    <h2>Privacy · la spunta il dentista</h2>
+    <label class="cons"><input type="checkbox" id="consenso_marketing"><span><b>Facoltativo.</b> Accetto di ricevere da CSA aggiornamenti e proposte commerciali.</span></label>
+    <p class="info">I dati servono a mandarti la guida e il piano che hai chiesto e a ricontattarti per parlarne. Titolare: C.S.A. S.r.l., Andria (BT). <a id="linkPrivacy" href="#">Informativa completa</a>.</p>
+  </div>
+
+  <div id="errore" role="alert"></div>
+  <button class="invia" id="invia" type="submit">Registra il contatto</button>
+</form>
+
+<section id="fatto" aria-live="polite">
+  <div class="ok">✓</div>
+  <h1 id="fattoTitolo">Contatto registrato.</h1>
+  <ul id="fattoDettagli"></ul>
+  <div id="fattoCoda" class="avviso-coda" hidden>Manca la rete: il contatto è salvato su questo telefono. Quando torna il segnale tocca il pulsante giallo in alto per inviarlo.</div>
+  <button class="nuovo" id="nuovo" type="button">Nuovo contatto</button>
+</section>
+
+</main>
+<script>
+const HUBSPOT = {
+  portalId: "145641356",
+  moduloGuida: "325e79c8-0339-4b49-8595-498d0d45ba25", // Dentalevante 2026 · Landing 1 · Scarica la guida
+  moduloPiano: "ba811dc5-2bdd-489e-9659-ebe8396bdb22"  // Dentalevante 2026 · Landing 2 · Richiedi il piano
+};
+const LINK_PRIVACY = "";   // URL dell'informativa privacy
+const PAGINA = "https://dentisti.csapubblicita.it/stand.html?utm_source=stand&utm_medium=agente";
+const CODA = "csa-stand-coda";
+
+if (LINK_PRIVACY) document.getElementById("linkPrivacy").href = LINK_PRIVACY;
+else document.getElementById("linkPrivacy").removeAttribute("href");
+
+function leggi(k, def) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : def; } catch (e) { return def; } }
+function scrivi(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+
+function corpoHubSpot(d) {
+  const parti = d.nome.trim().split(/\s+/);
+  const righe = [
+    "STAND · inserito da " + d.agente,
+    d.richiesta === "piano" ? "Richiesta: guida e piano strategico gratuito" : "Richiesta: guida gratuita",
+    "Guida già data a mano: " + (d.amano || "non indicato"),
+    "Tipo: " + (d.tipo || "non indicato"),
+    "Sedi: " + (d.sede || "non indicato"),
+    "Fascia oraria preferita: " + (d.fascia || "non indicata"),
+    d.note ? "Note: " + d.note : "",
+    "Fonte: Dentalevante 2026 · stand (inserimento agente)",
+    "Consenso marketing: " + (d.consenso_marketing ? "sì" : "no"),
+    "Provenienza: stand / agente"
+  ].filter(Boolean);
+  const campi = { email: d.email, firstname: parti.shift() || "", lastname: parti.join(" "), mobilephone: d.cellulare, company: d.studio, city: d.comune, message: righe.join("\n") };
+  return {
+    fields: Object.keys(campi).map(function (k) { return { objectTypeId: "0-1", name: k, value: campi[k] }; }),
+    context: { pageUri: PAGINA, pageName: "Dentalevante 2026 · Stand · inserimento agente" },
+    legalConsentOptions: { consent: { consentToProcess: true, text: "Acconsento al trattamento dei miei dati da parte di C.S.A. S.r.l. per ricevere quanto richiesto ed essere ricontattato." } }
+  };
+}
+async function invia(d) {
+  const modulo = d.richiesta === "piano" ? HUBSPOT.moduloPiano : HUBSPOT.moduloGuida;
+  const r = await fetch("https://api-eu1.hsforms.com/submissions/v3/integration/submit/" + HUBSPOT.portalId + "/" + modulo, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(corpoHubSpot(d)) });
+  if (!r.ok) { const e = new Error("HubSpot " + r.status + " " + (await r.text()).slice(0, 300)); e.status = r.status; throw e; }
+}
+
+// coda per quando manca la rete
+const bottoneCoda = document.getElementById("coda");
+function aggiornaCoda() {
+  const c = leggi(CODA, []);
+  bottoneCoda.textContent = "Da inviare: " + c.length + " ↻";
+  bottoneCoda.classList.toggle("on", c.length > 0);
+}
+async function svuotaCoda() {
+  const c = leggi(CODA, []); const restano = [];
+  for (const d of c) { try { await invia(d); } catch (e) { if (e.status >= 400 && e.status < 500) { d.errore = String(e.message); } restano.push(d); } }
+  scrivi(CODA, restano); aggiornaCoda();
+  return c.length - restano.length;
+}
+bottoneCoda.addEventListener("click", async function () {
+  bottoneCoda.disabled = true; bottoneCoda.textContent = "Invio…";
+  const n = await svuotaCoda(); bottoneCoda.disabled = false;
+  if (!leggi(CODA, []).length) alertSoft(n + (n === 1 ? " contatto inviato." : " contatti inviati."));
+});
+function alertSoft(t) { const e = document.getElementById("errore"); e.style.background = "#EAF8F0"; e.style.color = "#1E7A47"; e.textContent = t; e.classList.add("on"); setTimeout(function () { e.classList.remove("on"); e.style.background = ""; e.style.color = ""; }, 3500); }
+aggiornaCoda();
+window.addEventListener("online", svuotaCoda);
+
+// agente ricordato su questo telefono
+const agente = document.getElementById("agente");
+agente.value = leggi("csa-stand-agente", "");
+
+const modulo = document.getElementById("modulo");
+const errore = document.getElementById("errore");
+function scelta(n) { const el = modulo.querySelector("input[name=" + n + "]:checked"); return el ? el.value : ""; }
+
+modulo.addEventListener("submit", async function (e) {
+  e.preventDefault();
+  errore.classList.remove("on");
+  const bad = [];
+  ["agente", "nome", "nomestudio", "comune", "cellulare", "email"].forEach(function (id) {
+    const el = document.getElementById(id); let ok = !!el.value.trim();
+    if (ok && id === "cellulare") ok = el.value.replace(/\D/g, "").length >= 9;
+    if (ok && id === "email") ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim());
+    el.setAttribute("aria-invalid", ok ? "false" : "true"); if (!ok) bad.push(el);
+  });
+  const richiesta = scelta("richiesta");
+  if (bad.length || !richiesta) {
+    errore.textContent = bad.length ? "Controlla i campi evidenziati (cellulare almeno 9 cifre, email valida)." : "Scegli cosa vuole ricevere: solo la guida, o guida e piano.";
+    errore.classList.add("on"); if (bad[0]) bad[0].focus(); return;
+  }
+  const d = {
+    agente: agente.value.trim(),
+    nome: document.getElementById("nome").value.trim(),
+    studio: document.getElementById("nomestudio").value.trim(),
+    comune: document.getElementById("comune").value.trim(),
+    cellulare: document.getElementById("cellulare").value.trim(),
+    email: document.getElementById("email").value.trim(),
+    richiesta: richiesta, amano: scelta("amano"), tipo: scelta("tipo"), sede: scelta("sede"), fascia: scelta("fascia"),
+    note: document.getElementById("note").value.trim(),
+    consenso_marketing: document.getElementById("consenso_marketing").checked,
+    quando: new Date().toISOString()
+  };
+  scrivi("csa-stand-agente", d.agente);
+  const b = document.getElementById("invia"); b.disabled = true; b.textContent = "Invio in corso…";
+  let inCoda = false;
+  try { await invia(d); }
+  catch (err) {
+    if (err.status >= 400 && err.status < 500) {
+      errore.textContent = "HubSpot ha rifiutato l'invio: controlla email e cellulare. (" + err.message.slice(0, 120) + ")";
+      errore.classList.add("on"); b.disabled = false; b.textContent = "Registra il contatto"; return;
+    }
+    const c = leggi(CODA, []); c.push(d); scrivi(CODA, c); aggiornaCoda(); inCoda = true;
+  }
+  b.disabled = false; b.textContent = "Registra il contatto";
+  document.getElementById("fattoTitolo").textContent = inCoda ? "Salvato, da inviare." : "Contatto registrato.";
+  const li = [
+    d.nome + " · " + d.studio + ", " + d.comune,
+    d.richiesta === "piano" ? "Gli arriva la mail del piano, con il link alla guida. Piano entro 3 giorni lavorativi." : "Gli arriva la mail con la guida e l'invito al piano.",
+    "Consenso proposte commerciali: " + (d.consenso_marketing ? "sì" : "no")
+  ];
+  document.getElementById("fattoDettagli").innerHTML = "";
+  li.forEach(function (t) { const x = document.createElement("li"); x.textContent = t; document.getElementById("fattoDettagli").appendChild(x); });
+  document.getElementById("fattoCoda").hidden = !inCoda;
+  modulo.style.display = "none"; document.getElementById("fatto").classList.add("on"); window.scrollTo(0, 0);
+});
+
+document.getElementById("nuovo").addEventListener("click", function () {
+  modulo.reset(); agente.value = leggi("csa-stand-agente", "");
+  modulo.querySelectorAll("[aria-invalid]").forEach(function (el) { el.removeAttribute("aria-invalid"); });
+  document.getElementById("fatto").classList.remove("on"); modulo.style.display = ""; window.scrollTo(0, 0);
+  document.getElementById("nome").focus();
+});
+</script>
+</body>
+</html>
