@@ -11,7 +11,8 @@
   L'agente compila mentre parla con il dentista. Invio a HubSpot sugli stessi moduli delle landing, così partono le mail automatiche:
     - solo guida  → modulo «Landing 1 · Scarica la guida»  → mail 1 (guida + invito al piano)
     - guida+piano → modulo «Landing 2 · Richiedi il piano» → mail 2 (piano in preparazione + link alla guida)
-  Agente: Riccardo Vitti o Annarosa Ieva (utenti HubSpot); il contatto viene assegnato a lui/lei come «Proprietario del contatto».
+  Agente: Riccardo Vitti o Annarosa Ieva (utenti HubSpot; il valore è il loro ID proprietario). Il proprietario NON si può impostare dal modulo
+  (HubSpot non accetta campi «utente» nei moduli): si assegna in blocco da Contatti, filtro «Messaggio contiene inserito da <nome>».
   Gli invii dello stand si distinguono da quelli spontanei per:
     - pagina di conversione: stand.html?utm_source=stand
     - campo Messaggio: prima riga «STAND · inserito da <agente>» e «Fonte: Dentalevante 2026 · stand (inserimento agente)».
@@ -184,7 +185,6 @@ function corpoHubSpot(d) {
     "Provenienza: stand / agente"
   ].filter(Boolean);
   const campi = { email: d.email, firstname: parti.shift() || "", lastname: parti.join(" "), mobilephone: d.cellulare, company: d.studio, city: d.comune, message: righe.join("\n") };
-  if (d.owner) campi.hubspot_owner_id = d.owner;   // il contatto viene assegnato all'agente in HubSpot
   return {
     fields: Object.keys(campi).map(function (k) { return { objectTypeId: "0-1", name: k, value: campi[k] }; }),
     context: { pageUri: PAGINA, pageName: "Dentalevante 2026 · Stand · inserimento agente" },
