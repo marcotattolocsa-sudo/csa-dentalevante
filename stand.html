@@ -11,6 +11,7 @@
   L'agente compila mentre parla con il dentista. Invio a HubSpot sugli stessi moduli delle landing, così partono le mail automatiche:
     - solo guida  → modulo «Landing 1 · Scarica la guida»  → mail 1 (guida + invito al piano)
     - guida+piano → modulo «Landing 2 · Richiedi il piano» → mail 2 (piano in preparazione + link alla guida)
+  Agente: Riccardo Vitti o Annarosa Ieva (utenti HubSpot); il contatto viene assegnato a lui/lei come «Proprietario del contatto».
   Gli invii dello stand si distinguono da quelli spontanei per:
     - pagina di conversione: stand.html?utm_source=stand
     - campo Messaggio: prima riga «STAND · inserito da <agente>» e «Fonte: Dentalevante 2026 · stand (inserimento agente)».
@@ -82,9 +83,11 @@ button.nuovo { width: 100%; margin-top: 20px; font: 800 18px Inter, sans-serif; 
   <p class="sub">Compila mentre parli con il dentista. Gli arriva subito la mail giusta.</p>
 
   <div class="card">
-    <h2>Agente</h2>
-    <label class="campo" for="agente">Il tuo nome</label>
-    <input type="text" id="agente" autocomplete="off" placeholder="Nome e cognome">
+    <h2>Chi sei</h2>
+    <div class="scelte grandi" id="agenti">
+      <label><input type="radio" name="agente" value="1972932174" data-nome="Riccardo Vitti"><span>Riccardo Vitti</span></label>
+      <label><input type="radio" name="agente" value="1935539102" data-nome="Annarosa Ieva"><span>Annarosa Ieva</span></label>
+    </div>
   </div>
 
   <div class="card">
@@ -181,6 +184,7 @@ function corpoHubSpot(d) {
     "Provenienza: stand / agente"
   ].filter(Boolean);
   const campi = { email: d.email, firstname: parti.shift() || "", lastname: parti.join(" "), mobilephone: d.cellulare, company: d.studio, city: d.comune, message: righe.join("\n") };
+  if (d.owner) campi.hubspot_owner_id = d.owner;   // il contatto viene assegnato all'agente in HubSpot
   return {
     fields: Object.keys(campi).map(function (k) { return { objectTypeId: "0-1", name: k, value: campi[k] }; }),
     context: { pageUri: PAGINA, pageName: "Dentalevante 2026 · Stand · inserimento agente" },
@@ -215,9 +219,9 @@ function alertSoft(t) { const e = document.getElementById("errore"); e.style.bac
 aggiornaCoda();
 window.addEventListener("online", svuotaCoda);
 
-// agente ricordato su questo telefono
-const agente = document.getElementById("agente");
-agente.value = leggi("csa-stand-agente", "");
+// agente (utente HubSpot) ricordato su questo telefono
+function scegliAgente(id) { const el = document.querySelector("input[name=agente][value='" + id + "']"); if (el) el.checked = true; }
+scegliAgente(leggi("csa-stand-agente", ""));
 
 const modulo = document.getElementById("modulo");
 const errore = document.getElementById("errore");
@@ -227,19 +231,20 @@ modulo.addEventListener("submit", async function (e) {
   e.preventDefault();
   errore.classList.remove("on");
   const bad = [];
-  ["agente", "nome", "nomestudio", "comune", "cellulare", "email"].forEach(function (id) {
+  ["nome", "nomestudio", "comune", "cellulare", "email"].forEach(function (id) {
     const el = document.getElementById(id); let ok = !!el.value.trim();
     if (ok && id === "cellulare") ok = el.value.replace(/\D/g, "").length >= 9;
     if (ok && id === "email") ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim());
     el.setAttribute("aria-invalid", ok ? "false" : "true"); if (!ok) bad.push(el);
   });
   const richiesta = scelta("richiesta");
-  if (bad.length || !richiesta) {
-    errore.textContent = bad.length ? "Controlla i campi evidenziati (cellulare almeno 9 cifre, email valida)." : "Scegli cosa vuole ricevere: solo la guida, o guida e piano.";
+  const ag = modulo.querySelector("input[name=agente]:checked");
+  if (!ag || bad.length || !richiesta) {
+    errore.textContent = !ag ? "Scegli chi sei: Riccardo o Annarosa." : bad.length ? "Controlla i campi evidenziati (cellulare almeno 9 cifre, email valida)." : "Scegli cosa vuole ricevere: solo la guida, o guida e piano.";
     errore.classList.add("on"); if (bad[0]) bad[0].focus(); return;
   }
   const d = {
-    agente: agente.value.trim(),
+    agente: ag.dataset.nome, owner: ag.value,
     nome: document.getElementById("nome").value.trim(),
     studio: document.getElementById("nomestudio").value.trim(),
     comune: document.getElementById("comune").value.trim(),
@@ -250,7 +255,7 @@ modulo.addEventListener("submit", async function (e) {
     consenso_marketing: document.getElementById("consenso_marketing").checked,
     quando: new Date().toISOString()
   };
-  scrivi("csa-stand-agente", d.agente);
+  scrivi("csa-stand-agente", d.owner);
   const b = document.getElementById("invia"); b.disabled = true; b.textContent = "Invio in corso…";
   let inCoda = false;
   try { await invia(d); }
@@ -275,7 +280,7 @@ modulo.addEventListener("submit", async function (e) {
 });
 
 document.getElementById("nuovo").addEventListener("click", function () {
-  modulo.reset(); agente.value = leggi("csa-stand-agente", "");
+  modulo.reset(); scegliAgente(leggi("csa-stand-agente", ""));
   modulo.querySelectorAll("[aria-invalid]").forEach(function (el) { el.removeAttribute("aria-invalid"); });
   document.getElementById("fatto").classList.remove("on"); modulo.style.display = ""; window.scrollTo(0, 0);
   document.getElementById("nome").focus();
