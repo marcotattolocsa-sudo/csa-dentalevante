@@ -17,7 +17,7 @@
     - pagina di conversione: stand.html?utm_source=stand
     - campo Messaggio: prima riga «STAND · inserito da <agente>» e «Fonte: Dentalevante 2026 · stand (inserimento agente)».
   Se manca la rete l'invio resta in coda sul telefono e si reinvia con il pulsante in alto.
-  DA CONFERMARE: link informativa privacy (LINK_PRIVACY).
+  Informativa privacy: https://www.iubenda.com/privacy-policy/49713644 (la stessa del sito csapubblicita.it).
 -->
 <style>
 @font-face { font-family: Inter; font-weight: 400; src: url(assets/Inter-Regular.otf); font-display: swap; }
@@ -138,7 +138,7 @@ button.nuovo { width: 100%; margin-top: 20px; font: 800 18px Inter, sans-serif; 
   <div class="card">
     <h2>Privacy · la spunta il dentista</h2>
     <label class="cons"><input type="checkbox" id="consenso_marketing"><span><b>Facoltativo.</b> Accetto di ricevere da CSA aggiornamenti e proposte commerciali.</span></label>
-    <p class="info">I dati servono a mandarti la guida e il piano che hai chiesto e a ricontattarti per parlarne. Titolare: C.S.A. S.r.l., Andria (BT). <a id="linkPrivacy" href="#">Informativa completa</a>.</p>
+    <p class="info">I dati servono a mandarti la guida e il piano che hai chiesto e a ricontattarti per parlarne. Titolare: C.S.A. S.r.l., Andria (BT). <a id="linkPrivacy" href="https://www.iubenda.com/privacy-policy/49713644" target="_blank" rel="noopener">Informativa completa</a>.</p>
   </div>
 
   <div id="errore" role="alert"></div>
@@ -160,7 +160,7 @@ const HUBSPOT = {
   moduloGuida: "325e79c8-0339-4b49-8595-498d0d45ba25", // Dentalevante 2026 · Landing 1 · Scarica la guida
   moduloPiano: "ba811dc5-2bdd-489e-9659-ebe8396bdb22"  // Dentalevante 2026 · Landing 2 · Richiedi il piano
 };
-const LINK_PRIVACY = "";   // URL dell'informativa privacy
+const LINK_PRIVACY = "https://www.iubenda.com/privacy-policy/49713644";   // URL dell'informativa privacy
 const PAGINA = "https://dentisti.csapubblicita.it/stand.html?utm_source=stand&utm_medium=agente";
 const CODA = "csa-stand-coda";
 

@@ -12,7 +12,7 @@
   Più corta della landing della guida: niente download, solo la richiesta del piano.
   INVIO: HubSpot (account 145641356, eu1), modulo «Landing 2 · Richiedi il piano».
   Dopo l'invio va a grazie-piano.html. Codice di tracciamento HubSpot in fondo alla pagina.
-  DA CONFERMARE: link informativa privacy.
+  Informativa privacy: https://www.iubenda.com/privacy-policy/49713644 (la stessa del sito csapubblicita.it).
 -->
 <style>
 @font-face { font-family: Inter; font-weight: 400; src: url(assets/Inter-Regular.otf); font-display: swap; }
@@ -135,7 +135,7 @@ footer a { color: inherit; }
       </div>
       <label class="consenso"><input type="checkbox" id="c_ricontatto" name="consenso_ricontatto" required><span><b>Voglio ricevere il piano strategico gratuito</b> ed essere ricontattato da CSA per parlarne.</span></label>
       <label class="consenso"><input type="checkbox" name="consenso_marketing"><span>Facoltativo. Accetto di ricevere da CSA aggiornamenti e proposte commerciali.</span></label>
-      <p class="info">Titolare del trattamento: C.S.A. S.r.l., Andria (BT). <a href="#" id="linkPrivacy">Informativa privacy</a>.</p>
+      <p class="info">Titolare del trattamento: C.S.A. S.r.l., Andria (BT). <a href="https://www.iubenda.com/privacy-policy/49713644" id="linkPrivacy" target="_blank" rel="noopener">Informativa privacy</a>.</p>
       <p class="errore" id="errore" role="alert"></p>
       <button class="invia" type="submit" id="invia">Voglio il mio piano</button>
     </form>
@@ -174,7 +174,7 @@ function righeComuni(d) {
     (d.utm_source ? "Provenienza: " + d.utm_source + (d.utm_medium ? " / " + d.utm_medium : "") : "")
   ];
 }
-const LINK_PRIVACY = "";   // URL dell'informativa privacy
+const LINK_PRIVACY = "https://www.iubenda.com/privacy-policy/49713644";   // URL dell'informativa privacy
 
 if (LINK_PRIVACY) document.getElementById("linkPrivacy").href = LINK_PRIVACY;
 const q = new URLSearchParams(location.search);
