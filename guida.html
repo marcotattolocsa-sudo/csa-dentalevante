@@ -180,6 +180,8 @@ body.modo-storie > header, body.modo-storie main, body.modo-storie .glow { displ
 .cta-s { width: 100%; margin-top: 18px; border: 0; border-radius: 14px; background: #D6177A; color: #fff; font: 800 18px Inter, sans-serif; padding: 17px; flex: none; }
 .logo-s { height: 26px; align-self: flex-start; margin-bottom: 10px; }
 body.modo-storie .barra p { display: none; }
+body.senza-barra .barra { display: none; }
+body.senza-barra #storie { bottom: 0; }
 </style>
 </head>
 <body>
@@ -292,6 +294,7 @@ function vaiStoria(n) {
   document.querySelectorAll("#barre i").forEach(function (b, k) { b.className = k < n ? "fatta" : (k === n ? "ora" : ""); });
   document.getElementById("numStoria").textContent = (n + 1) + " / " + el.length;
   document.getElementById("testaStorie").classList.toggle("chiaro", STORIE[n].tema === "perla");
+  document.body.classList.toggle("senza-barra", STORIE[n].pagina >= 15);
   if (STORIE[n].pagina === 15 && !vaiStoria.vista15) { vaiStoria.vista15 = true; traccia("/guida.html?pagina=15"); }
 }
 function avviaStorie() {
