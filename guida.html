@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Come i pazienti scelgono il loro dentista di fiducia · Guida CSA</title>
+<meta name="description" content="La guida CSA gratuita: solo 6 pazienti su 100 scelgono il loro dentista online. Ecco come scelgono gli altri 94.">
+<meta name="robots" content="noindex">
+<!--
+  14d · Guida sfogliabile · 12/11/2026. Sostituisce il link diretto al PDF in mail 1, mail 2 e grazie.html,
+  così chi legge resta nel funnel e la pagina si traccia.
+  - Pagine: assets/guida/p-01.jpg … p-16.jpg (da 04-guida-dentista-A5.pdf, 1100 px). Rigenerare se cambia la guida:
+      pdftoppm -scale-to-x 1100 -scale-to-y -1 -jpeg -jpegopt quality=82 04-guida-dentista-A5.pdf 14-landing/assets/guida/p
+  - Sfoglia: StPageFlip 2.0.7 (MIT), in assets/vendor/page-flip.browser.js.
+  - Video delle testimonianze (pagine 10-13): si aprono in una finestra sopra la guida (youtube-nocookie), senza uscire.
+  - QR e indirizzo delle pagine 15-16 e la barra in basso: portano a piano.html, sullo stesso sito.
+  - Tracciamento HubSpot: visita della pagina + visite «virtuali» per ogni video aperto (/guida.html?video=…),
+    per l'arrivo alla pagina del piano (/guida.html?pagina=15) e per il download del PDF (/guida.html?azione=pdf).
+-->
+<style>
+@font-face { font-family: Inter; font-weight: 500; src: url(assets/Inter-Medium.otf); font-display: swap; }
+@font-face { font-family: Inter; font-weight: 700; src: url(assets/Inter-Bold.otf); font-display: swap; }
+@font-face { font-family: Inter; font-weight: 800; src: url(assets/Inter-ExtraBold.otf); font-display: swap; }
+:root { --nero: #050507; --grafite: #1B1B1F; --m: #F03587; --t2: #A1A1A6; --gutter: 16px; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; }
+body { font-family: Inter, "Helvetica Neue", Arial, sans-serif; background: var(--nero); color: #fff; min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
+.glow { position: fixed; border-radius: 50%; filter: blur(110px); pointer-events: none; z-index: 0; }
+header { position: relative; z-index: 2; display: flex; align-items: center; gap: 14px; padding: 16px var(--gutter); max-width: 1200px; width: 100%; margin: 0 auto; }
+header img { height: 22px; }
+header .tit { font-size: 13px; font-weight: 700; color: var(--t2); letter-spacing: .02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+header .pdf { margin-left: auto; font-size: 13px; font-weight: 700; color: #fff; text-decoration: none; border: 1px solid #3A3A3C; border-radius: 99px; padding: 8px 14px; white-space: nowrap; }
+main { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px var(--gutter) 120px; }
+#libro { margin: 0 auto; }
+.pagina { background: #111; overflow: hidden; }
+.pagina img { display: block; width: 100%; height: 100%; object-fit: cover; user-select: none; -webkit-user-drag: none; pointer-events: none; }
+.hot { position: absolute; display: block; border: 0; background: transparent; cursor: pointer; border-radius: 10px; z-index: 3; }
+.hot::after { content: ""; position: absolute; inset: 0; border-radius: 10px; box-shadow: 0 0 0 2px rgba(240,53,135,0); transition: box-shadow .2s; }
+.hot:hover::after, .hot:focus-visible::after { box-shadow: 0 0 0 3px rgba(240,53,135,.9); }
+.hot.pulse::after { animation: pulse 2.4s ease-in-out infinite; }
+@keyframes pulse { 0%,100% { box-shadow: 0 0 0 2px rgba(240,53,135,.0); } 50% { box-shadow: 0 0 0 3px rgba(240,53,135,.85); } }
+.comandi { display: flex; align-items: center; gap: 14px; margin-top: 18px; }
+.comandi button { width: 46px; height: 46px; border-radius: 50%; border: 1px solid #3A3A3C; background: var(--grafite); color: #fff; font-size: 20px; cursor: pointer; }
+.comandi button:disabled { opacity: .35; cursor: default; }
+.comandi span { font-size: 14px; font-weight: 700; color: var(--t2); min-width: 92px; text-align: center; }
+.suggerimento { margin-top: 10px; font-size: 13px; color: #8E8E93; text-align: center; }
+.barra { position: fixed; left: 0; right: 0; bottom: 0; z-index: 5; background: rgba(5,5,7,.92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-top: 1px solid #2C2C2E; padding: 12px var(--gutter) calc(12px + env(safe-area-inset-bottom)); }
+.barra .riga { max-width: 900px; margin: 0 auto; display: flex; align-items: center; gap: 14px; }
+.barra p { font-size: 14px; color: #D1D1D6; line-height: 1.35; }
+.barra p b { color: #fff; }
+.barra a { margin-left: auto; flex: none; background: var(--m); color: #fff; text-decoration: none; font-weight: 800; font-size: 15px; padding: 13px 18px; border-radius: 12px; white-space: nowrap; }
+@media (max-width: 600px) { .barra p { display: none; } .barra a { margin: 0 auto; width: 100%; text-align: center; } header .tit { display: none; } }
+/* finestra video */
+#modal { position: fixed; inset: 0; z-index: 20; display: none; align-items: center; justify-content: center; padding: var(--gutter); background: rgba(0,0,0,.82); }
+#modal.on { display: flex; }
+#modal .box { width: 100%; max-width: 960px; }
+#modal .testa { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+#modal .testa b { font-size: 15px; }
+#modal .chiudi { width: 42px; height: 42px; border-radius: 50%; border: 0; background: #2C2C2E; color: #fff; font-size: 22px; cursor: pointer; flex: none; }
+#modal .video { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 12px; overflow: hidden; }
+#modal iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+#modal .dopo { margin-top: 14px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; font-size: 14px; color: #D1D1D6; }
+#modal .dopo a { color: #fff; font-weight: 800; text-decoration: none; background: var(--m); padding: 11px 16px; border-radius: 10px; }
+</style>
+</head>
+<body>
+<div class="glow" style="width:520px;height:420px;left:-200px;bottom:-120px;background:#F03587;opacity:.28"></div>
+<div class="glow" style="width:480px;height:380px;right:-180px;top:-140px;background:#5ACAF2;opacity:.2"></div>
+
+<header>
+  <img src="assets/csa_logo_orizzontale_bianco.svg" alt="CSA">
+  <span class="tit">Guida gratuita · Come i pazienti scelgono il loro dentista di fiducia</span>
+  <a class="pdf" id="pdf" href="assets/guida-csa-come-i-pazienti-scelgono-il-loro-dentista-di-fiducia.pdf" download>Scarica PDF</a>
+</header>
+
+<main>
+  <div id="libro"></div>
+  <div class="comandi">
+    <button id="prima" type="button" aria-label="Pagina precedente">←</button>
+    <span id="contatore">1 / 16</span>
+    <button id="dopo" type="button" aria-label="Pagina successiva">→</button>
+  </div>
+  <p class="suggerimento">Sfoglia trascinando l'angolo o con le frecce. I video si aprono qui.</p>
+</main>
+
+<div class="barra"><div class="riga">
+  <p><b>Solo per Dentalevante:</b> il piano strategico gratuito del tuo studio, entro 3 giorni lavorativi.</p>
+  <a id="ctaPiano" href="piano.html?utm_source=guida-web">Richiedi il piano gratuito →</a>
+</div></div>
+
+<div id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitolo">
+  <div class="box">
+    <div class="testa"><b id="modalTitolo"></b><button class="chiudi" id="chiudi" type="button" aria-label="Chiudi il video">×</button></div>
+    <div class="video" id="video"></div>
+    <div class="dopo"><span>Vuoi farlo anche per il tuo studio?</span><a href="piano.html?utm_source=guida-video">Richiedi il piano gratuito →</a></div>
+  </div>
+</div>
+
+<script src="assets/vendor/page-flip.browser.js"></script>
+<script>
+// zone cliccabili, in frazioni della pagina (dalle posizioni dei link nel PDF)
+const VIDEO = {
+  10: { id: "myDf86wQEJc", nome: "Zincomet", top: .816 },
+  11: { id: "XLlt7uhOfZM", nome: "Montrone, caseificio di Andria", top: .844 },
+  12: { id: "lsXrYXUX0q0", nome: "Chiarappa Impianti, Modugno", top: .844 },
+  13: { id: "kfE5_1H2jRc", nome: "FG Service, forniture industriali e utensileria", top: .740 }
+};
+const PIANO = {
+  15: [{ left: .085, top: .68, w: .83, h: .245 }],
+  16: [{ left: .085, top: .425, w: .83, h: .165 }]
+};
+const N = 16;
+
+function traccia(percorso) {   // visita «virtuale» in HubSpot (parte solo se il visitatore ha accettato i cookie)
+  const q = window._hsq = window._hsq || [];
+  q.push(["setPath", percorso]); q.push(["trackPageView"]);
+}
+
+const libro = document.getElementById("libro");
+for (let i = 1; i <= N; i++) {
+  const d = document.createElement("div");
+  d.className = "pagina"; if (i === 1 || i === N) d.dataset.density = "hard";
+  const img = document.createElement("img");
+  img.src = "assets/guida/p-" + String(i).padStart(2, "0") + ".jpg"; img.alt = "Pagina " + i + " della guida";
+  if (i > 3) img.loading = "lazy";
+  d.appendChild(img);
+  if (VIDEO[i]) {
+    const v = VIDEO[i], b = document.createElement("button");
+    b.className = "hot pulse"; b.type = "button"; b.setAttribute("aria-label", "Guarda il video di " + v.nome);
+    Object.assign(b.style, { left: "8.5%", width: "83%", top: (v.top * 100) + "%", height: "7.5%" });
+    b.addEventListener("click", function (e) { e.stopPropagation(); apriVideo(v); });
+    d.appendChild(b);
+  }
+  (PIANO[i] || []).forEach(function (z) {
+    const a = document.createElement("a");
+    a.className = "hot"; a.href = "piano.html?utm_source=guida-web&pagina=" + i; a.setAttribute("aria-label", "Richiedi il piano strategico gratuito");
+    Object.assign(a.style, { left: (z.left * 100) + "%", width: (z.w * 100) + "%", top: (z.top * 100) + "%", height: (z.h * 100) + "%" });
+    d.appendChild(a);
+  });
+  libro.appendChild(d);
+}
+
+const flip = new St.PageFlip(libro, {
+  width: 550, height: 779, size: "stretch",
+  minWidth: 260, maxWidth: 620, minHeight: 368, maxHeight: 878,
+  showCover: true, usePortrait: true, mobileScrollSupport: true,
+  maxShadowOpacity: 0.35, flippingTime: 700, clickEventForward: true, startZIndex: 1
+});
+flip.loadFromHTML(document.querySelectorAll("#libro .pagina"));
+
+// i link dentro le pagine: StPageFlip li inoltra, ma per sicurezza gestiamo anche il tocco
+libro.addEventListener("click", function (e) {
+  const a = e.target.closest("a.hot"); if (a) { location.href = a.href; }
+});
+
+const contatore = document.getElementById("contatore"), prima = document.getElementById("prima"), dopo = document.getElementById("dopo");
+const viste = new Set();
+function aggiorna() {
+  const i = flip.getCurrentPageIndex() + 1, tot = flip.getPageCount();
+  const orient = flip.getOrientation();
+  let testo = i + " / " + tot;
+  if (orient === "landscape" && i > 1 && i < tot) testo = i + "–" + Math.min(i + 1, tot) + " / " + tot;
+  contatore.textContent = testo;
+  prima.disabled = i <= 1; dopo.disabled = i >= tot - (orient === "landscape" ? 1 : 0);
+  [14, 15].forEach(function (p) { if ((i === p || i + 1 === p) && !viste.has(p)) { viste.add(p); if (p === 15) traccia("/guida.html?pagina=15"); } });
+}
+flip.on("flip", aggiorna); flip.on("changeOrientation", aggiorna); flip.on("init", aggiorna);
+setTimeout(aggiorna, 300);
+prima.addEventListener("click", function () { flip.flipPrev(); });
+dopo.addEventListener("click", function () { flip.flipNext(); });
+document.addEventListener("keydown", function (e) {
+  if (document.getElementById("modal").classList.contains("on")) { if (e.key === "Escape") chiudiVideo(); return; }
+  if (e.key === "ArrowRight") flip.flipNext(); if (e.key === "ArrowLeft") flip.flipPrev();
+});
+
+// finestra video
+const modal = document.getElementById("modal"), video = document.getElementById("video");
+let ultimoFocus = null;
+function apriVideo(v) {
+  ultimoFocus = document.activeElement;
+  document.getElementById("modalTitolo").textContent = v.nome;
+  video.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + v.id + '?autoplay=1&rel=0&modestbranding=1&playsinline=1" title="Video: ' + v.nome.replace(/"/g, "") + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
+  modal.classList.add("on"); document.getElementById("chiudi").focus();
+  traccia("/guida.html?video=" + v.id);
+}
+function chiudiVideo() { modal.classList.remove("on"); video.innerHTML = ""; if (ultimoFocus) ultimoFocus.focus(); }
+document.getElementById("chiudi").addEventListener("click", chiudiVideo);
+modal.addEventListener("click", function (e) { if (e.target === modal) chiudiVideo(); });
+
+document.getElementById("pdf").addEventListener("click", function () { traccia("/guida.html?azione=pdf"); });
+</script>
+<script type="text/javascript" id="hs-script-loader" async defer src="https://js-eu1.hs-scripts.com/145641356.js"></script>
+</body>
+</html>
