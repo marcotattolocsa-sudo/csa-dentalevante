@@ -13,9 +13,12 @@
       pdftoppm -scale-to-x 1100 -scale-to-y -1 -jpeg -jpegopt quality=82 04-guida-dentista-A5.pdf 14-landing/assets/guida/p
   - Sfoglia: StPageFlip 2.0.7 (MIT), in assets/vendor/page-flip.browser.js.
   - Video delle testimonianze (pagine 10-13): si aprono in una finestra sopra la guida (youtube-nocookie), senza uscire.
-  - QR e indirizzo delle pagine 15-16 e la barra in basso: portano a piano.html, sullo stesso sito.
+  - Pagine 15-16 in versione digitale (pulsante al posto del QR, da sorgenti/guida-web.sh). I pulsanti delle pagine 15-16,
+    la barra in basso e la finestra dei video aprono una finestra con il modulo del piano (modulo HubSpot «Landing 2»):
+    il lettore resta nella guida. Senza JavaScript i link portano a piano.html.
   - Tracciamento HubSpot: visita della pagina + visite «virtuali» per ogni video aperto (/guida.html?video=…),
-    per l'arrivo alla pagina del piano (/guida.html?pagina=15) e per il download del PDF (/guida.html?azione=pdf).
+    per l'arrivo alla pagina del piano (/guida.html?pagina=15), per il download del PDF (/guida.html?azione=pdf),
+    per l'apertura del modulo (/guida.html?piano=aperto-…) e per l'invio (/guida.html?piano=inviato).
 -->
 <style>
 @font-face { font-family: Inter; font-weight: 500; src: url(assets/Inter-Medium.otf); font-display: swap; }
@@ -61,6 +64,35 @@ main { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: c
 #modal iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 #modal .dopo { margin-top: 14px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; font-size: 14px; color: #D1D1D6; }
 #modal .dopo a { color: #fff; font-weight: 800; text-decoration: none; background: var(--m); padding: 11px 16px; border-radius: 10px; }
+/* finestra con il modulo del piano */
+#mPiano { position: fixed; inset: 0; z-index: 30; display: none; align-items: flex-start; justify-content: center; padding: 24px var(--gutter); background: rgba(0,0,0,.78); overflow-y: auto; -webkit-overflow-scrolling: touch; }
+#mPiano.on { display: flex; }
+#mPiano .scheda { position: relative; width: 100%; max-width: 620px; margin: auto 0; background: #fff; color: #1D1D1F; border-radius: 20px; padding: 28px 24px 24px; }
+#mPiano .chiudi { position: absolute; top: 12px; right: 12px; width: 40px; height: 40px; border-radius: 50%; border: 0; background: #F5F5F7; color: #1D1D1F; font-size: 22px; cursor: pointer; }
+#mPiano .pill { display: inline-block; background: var(--m); color: #fff; font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; padding: 6px 12px; border-radius: 99px; }
+#mPiano h2 { font-size: 27px; font-weight: 800; letter-spacing: -0.035em; line-height: 1.08; margin: 12px 40px 8px 0; }
+#mPiano .sotto { font-size: 15px; line-height: 1.5; color: #3A3A3C; }
+#mPiano .campi { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 12px; margin-top: 18px; }
+#mPiano .largo { grid-column: 1 / -1; }
+@media (max-width: 520px) { #mPiano .campi { grid-template-columns: 1fr; } #mPiano { padding: 12px; } #mPiano .scheda { padding: 24px 18px 20px; } }
+#mPiano label { display: block; font-size: 13px; font-weight: 700; color: #3A3A3C; margin-bottom: 6px; }
+#mPiano input[type=text], #mPiano input[type=tel], #mPiano input[type=email] { width: 100%; min-height: 50px; border: 1.5px solid #D1D1D6; border-radius: 12px; padding: 0 14px; font: 500 16px Inter, sans-serif; color: #1D1D1F; background: #fff; }
+#mPiano input:focus { outline: none; border-color: #D6177A; }
+#mPiano input[aria-invalid=true] { border-color: #D6177A; background: #FFF5F9; }
+#mPiano .scelte { display: flex; flex-wrap: wrap; gap: 8px; }
+#mPiano .scelte label { margin: 0; position: relative; }
+#mPiano .scelte input { position: absolute; opacity: 0; pointer-events: none; }
+#mPiano .scelte span { display: inline-flex; align-items: center; min-height: 44px; padding: 0 15px; border-radius: 22px; border: 1.5px solid #D1D1D6; font-size: 15px; font-weight: 600; cursor: pointer; }
+#mPiano .scelte input:checked + span { background: #1D1D1F; border-color: #1D1D1F; color: #fff; }
+#mPiano .consenso { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; font-weight: 500; line-height: 1.4; margin-top: 14px; }
+#mPiano .consenso input { width: 20px; height: 20px; flex: none; margin-top: 1px; accent-color: #D6177A; }
+#mPiano .info { font-size: 12px; color: #6E6E73; margin-top: 12px; }
+#mPiano .info a { color: #6E6E73; }
+#mPiano .errore { display: none; margin-top: 12px; background: #FFF0F5; color: #B0135F; border-radius: 10px; padding: 11px 12px; font-size: 14px; font-weight: 600; }
+#mPiano .errore.on { display: block; }
+#mPiano .invia { width: 100%; margin-top: 16px; border: 0; border-radius: 14px; background: #D6177A; color: #fff; font: 800 17px Inter, sans-serif; padding: 16px; cursor: pointer; }
+#mPiano .invia:disabled { opacity: .6; }
+#mPiano .ok { width: 52px; height: 52px; border-radius: 50%; background: #2FB36B; color: #fff; font-size: 28px; font-weight: 800; display: flex; align-items: center; justify-content: center; }
 </style>
 </head>
 <body>
@@ -85,14 +117,55 @@ main { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: c
 
 <div class="barra"><div class="riga">
   <p><b>Solo per Dentalevante:</b> il piano strategico gratuito del tuo studio, entro 3 giorni lavorativi.</p>
-  <a id="ctaPiano" href="piano.html?utm_source=guida-web">Richiedi il piano gratuito →</a>
+  <a id="ctaPiano" href="piano.html?utm_source=guida-web" data-piano="barra">Richiedi il piano gratuito →</a>
 </div></div>
 
 <div id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitolo">
   <div class="box">
     <div class="testa"><b id="modalTitolo"></b><button class="chiudi" id="chiudi" type="button" aria-label="Chiudi il video">×</button></div>
     <div class="video" id="video"></div>
-    <div class="dopo"><span>Vuoi farlo anche per il tuo studio?</span><a href="piano.html?utm_source=guida-video">Richiedi il piano gratuito →</a></div>
+    <div class="dopo"><span>Vuoi farlo anche per il tuo studio?</span><a href="piano.html?utm_source=guida-video" data-piano="video">Richiedi il piano gratuito →</a></div>
+  </div>
+</div>
+
+<div id="mPiano" role="dialog" aria-modal="true" aria-labelledby="mPianoTitolo">
+  <div class="scheda">
+    <button class="chiudi" id="chiudiPiano" type="button" aria-label="Chiudi">×</button>
+    <form id="modulo" novalidate>
+      <span class="pill">Solo per Dentalevante · gratis</span>
+      <h2 id="mPianoTitolo">Il piano strategico del tuo studio.</h2>
+      <p class="sotto">Lo prepariamo noi e te lo mandiamo <b>entro 3 giorni lavorativi</b>: i tuoi pazienti, i colleghi intorno a te, dove farti vedere, tre scenari. Non ti impegna a nulla.</p>
+      <div class="campi">
+        <div><label for="nome">Nome e cognome</label><input type="text" id="nome" autocomplete="name"></div>
+        <div><label for="nomestudio">Nome dello studio</label><input type="text" id="nomestudio" autocomplete="organization"></div>
+        <div><label for="comune">Comune</label><input type="text" id="comune" autocomplete="address-level2"></div>
+        <div><label for="cellulare">Cellulare</label><input type="tel" id="cellulare" autocomplete="tel" inputmode="tel"></div>
+        <div class="largo"><label for="email">Email</label><input type="email" id="email" autocomplete="email" inputmode="email"></div>
+        <div class="largo"><label id="l_tipo">Il tuo studio</label>
+          <div class="scelte" role="radiogroup" aria-labelledby="l_tipo">
+            <label><input type="radio" name="tipo" value="una sede"><span>Una sede</span></label>
+            <label><input type="radio" name="tipo" value="più sedi"><span>Più sedi</span></label>
+            <label><input type="radio" name="tipo" value="sto aprendo"><span>Sto aprendo</span></label>
+          </div></div>
+        <div class="largo"><label id="l_fascia">Quando preferisci essere chiamato?</label>
+          <div class="scelte" role="radiogroup" aria-labelledby="l_fascia">
+            <label><input type="radio" name="fascia" value="mattina"><span>Mattina</span></label>
+            <label><input type="radio" name="fascia" value="pausa pranzo"><span>Pausa pranzo</span></label>
+            <label><input type="radio" name="fascia" value="fine giornata"><span>Fine giornata</span></label>
+          </div></div>
+      </div>
+      <label class="consenso"><input type="checkbox" id="c_ricontatto"><span><b>Voglio ricevere il piano strategico gratuito</b> ed essere ricontattato da CSA per parlarne.</span></label>
+      <label class="consenso"><input type="checkbox" id="c_marketing"><span>Facoltativo. Accetto di ricevere da CSA aggiornamenti e proposte commerciali.</span></label>
+      <p class="info">Titolare del trattamento: C.S.A. S.r.l., Andria (BT). <a href="https://www.iubenda.com/privacy-policy/49713644" target="_blank" rel="noopener">Informativa privacy</a>.</p>
+      <p class="errore" id="errore" role="alert"></p>
+      <button class="invia" type="submit" id="invia">Voglio il mio piano</button>
+    </form>
+    <div id="fatto" hidden>
+      <div class="ok">✓</div>
+      <h2>Fatto. Il tuo piano è in preparazione.</h2>
+      <p class="sotto">Te lo mandiamo <b>entro 3 giorni lavorativi</b>, all'indirizzo che ci hai lasciato. Ti abbiamo appena scritto: se non trovi la mail, controlla la posta indesiderata.</p>
+      <button class="invia" type="button" id="torna">Torna alla guida</button>
+    </div>
   </div>
 </div>
 
@@ -105,9 +178,9 @@ const VIDEO = {
   12: { id: "lsXrYXUX0q0", nome: "Chiarappa Impianti, Modugno", top: .844 },
   13: { id: "kfE5_1H2jRc", nome: "FG Service, forniture industriali e utensileria", top: .740 }
 };
-const PIANO = {
-  15: [{ left: .085, top: .68, w: .83, h: .245 }],
-  16: [{ left: .085, top: .425, w: .83, h: .165 }]
+const PIANO = {   // pulsanti «Richiedi il piano gratuito» delle pagine digitali 15-16 (da sorgenti/guida-web.sh)
+  15: [{ left: .080, top: .860, w: .437, h: .068 }],
+  16: [{ left: .080, top: .444, w: .437, h: .068 }]
 };
 const N = 16;
 
@@ -132,8 +205,9 @@ for (let i = 1; i <= N; i++) {
     d.appendChild(b);
   }
   (PIANO[i] || []).forEach(function (z) {
-    const a = document.createElement("a");
-    a.className = "hot"; a.href = "piano.html?utm_source=guida-web&pagina=" + i; a.setAttribute("aria-label", "Richiedi il piano strategico gratuito");
+    const a = document.createElement("button");
+    a.className = "hot pulse"; a.type = "button"; a.dataset.piano = "pagina-" + i; a.setAttribute("aria-label", "Richiedi il piano strategico gratuito");
+    a.addEventListener("click", function (e) { e.stopPropagation(); apriPiano("pagina-" + i); });
     Object.assign(a.style, { left: (z.left * 100) + "%", width: (z.w * 100) + "%", top: (z.top * 100) + "%", height: (z.h * 100) + "%" });
     d.appendChild(a);
   });
@@ -153,10 +227,6 @@ const flip = new St.PageFlip(libro, {
 });
 flip.loadFromHTML(document.querySelectorAll("#libro .pagina"));
 
-// i link dentro le pagine: StPageFlip li inoltra, ma per sicurezza gestiamo anche il tocco
-libro.addEventListener("click", function (e) {
-  const a = e.target.closest("a.hot"); if (a) { location.href = a.href; }
-});
 
 const contatore = document.getElementById("contatore"), prima = document.getElementById("prima"), dopo = document.getElementById("dopo");
 const viste = new Set();
@@ -175,6 +245,7 @@ prima.addEventListener("click", function () { flip.flipPrev(); });
 dopo.addEventListener("click", function () { flip.flipNext(); });
 document.addEventListener("keydown", function (e) {
   if (document.getElementById("modal").classList.contains("on")) { if (e.key === "Escape") chiudiVideo(); return; }
+  if (document.getElementById("mPiano").classList.contains("on")) return;
   if (e.key === "ArrowRight") flip.flipNext(); if (e.key === "ArrowLeft") flip.flipPrev();
 });
 
@@ -191,6 +262,68 @@ function apriVideo(v) {
 function chiudiVideo() { modal.classList.remove("on"); video.innerHTML = ""; if (ultimoFocus) ultimoFocus.focus(); }
 document.getElementById("chiudi").addEventListener("click", chiudiVideo);
 modal.addEventListener("click", function (e) { if (e.target === modal) chiudiVideo(); });
+
+
+// ===== finestra con il modulo del piano =====
+const HUBSPOT = { portalId: "145641356", moduloPiano: "ba811dc5-2bdd-489e-9659-ebe8396bdb22" };  // Landing 2 · Richiedi il piano
+const q0 = new URLSearchParams(location.search);
+const provenienza = q0.get("utm_source") || "";
+const mPiano = document.getElementById("mPiano"), modulo = document.getElementById("modulo"), errore = document.getElementById("errore");
+let dovePiano = "", focusPrima = null;
+function apriPiano(da) {
+  dovePiano = da; focusPrima = document.activeElement;
+  if (modal.classList.contains("on")) chiudiVideo();
+  mPiano.classList.add("on"); document.body.style.overflow = "hidden";
+  setTimeout(function () { (document.getElementById("fatto").hidden ? document.getElementById("nome") : document.getElementById("torna")).focus(); }, 50);
+  traccia("/guida.html?piano=aperto-" + da);
+}
+function chiudiPiano() { mPiano.classList.remove("on"); document.body.style.overflow = ""; if (focusPrima) focusPrima.focus(); }
+document.querySelectorAll("[data-piano]").forEach(function (el) {
+  if (el.tagName === "A") el.addEventListener("click", function (e) { e.preventDefault(); apriPiano(el.dataset.piano); });
+});
+document.getElementById("chiudiPiano").addEventListener("click", chiudiPiano);
+document.getElementById("torna").addEventListener("click", chiudiPiano);
+mPiano.addEventListener("click", function (e) { if (e.target === mPiano) chiudiPiano(); });
+document.addEventListener("keydown", function (e) { if (e.key === "Escape" && mPiano.classList.contains("on")) chiudiPiano(); });
+
+function cookie(n) { const m = document.cookie.match(new RegExp("(?:^|; )" + n + "=([^;]*)")); return m ? m[1] : ""; }
+modulo.addEventListener("submit", async function (e) {
+  e.preventDefault(); errore.classList.remove("on");
+  const bad = [];
+  ["nome", "nomestudio", "comune", "cellulare", "email"].forEach(function (id) {
+    const el = document.getElementById(id); let ok = !!el.value.trim();
+    if (ok && id === "cellulare") ok = el.value.replace(/\D/g, "").length >= 9;
+    if (ok && id === "email") ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim());
+    el.setAttribute("aria-invalid", ok ? "false" : "true"); if (!ok) bad.push(el);
+  });
+  if (bad.length || !document.getElementById("c_ricontatto").checked) {
+    errore.textContent = bad.length ? "Controlla i campi evidenziati." : "Per prepararti il piano ci serve il consenso.";
+    errore.classList.add("on"); if (bad[0]) bad[0].focus(); return;
+  }
+  const v = function (id) { return document.getElementById(id).value.trim(); };
+  const sc = function (n) { const el = modulo.querySelector("input[name=" + n + "]:checked"); return el ? el.value : ""; };
+  const parti = v("nome").split(/\s+/), tipo = sc("tipo"), fascia = sc("fascia"), mkt = document.getElementById("c_marketing").checked;
+  const righe = ["Richiesta del piano strategico gratuito", "Tipo di studio: " + (tipo || "non indicato"), "Fascia oraria preferita: " + (fascia || "non indicata"),
+    "Fonte: Dentalevante 2026 · guida sfogliabile (" + (dovePiano || "pulsante") + ")", "Consenso marketing: " + (mkt ? "sì" : "no"),
+    provenienza ? "Provenienza: " + provenienza : ""].filter(Boolean);
+  const campi = { email: v("email"), firstname: parti.shift() || "", lastname: parti.join(" "), mobilephone: v("cellulare"), company: v("nomestudio"), city: v("comune"), message: righe.join("\n") };
+  const corpo = {
+    fields: Object.keys(campi).map(function (k) { return { objectTypeId: "0-1", name: k, value: campi[k] }; }),
+    context: Object.assign({ pageUri: location.href, pageName: document.title }, cookie("hubspotutk") ? { hutk: cookie("hubspotutk") } : {}),
+    legalConsentOptions: { consent: { consentToProcess: true, text: "Acconsento al trattamento dei miei dati da parte di C.S.A. S.r.l. per ricevere quanto richiesto ed essere ricontattato." } }
+  };
+  const b = document.getElementById("invia"); b.disabled = true; b.textContent = "Invio in corso…";
+  try {
+    const r = await fetch("https://api-eu1.hsforms.com/submissions/v3/integration/submit/" + HUBSPOT.portalId + "/" + HUBSPOT.moduloPiano, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(corpo) });
+    if (!r.ok) throw new Error("HubSpot " + r.status);
+    modulo.hidden = true; document.getElementById("fatto").hidden = false; document.getElementById("torna").focus();
+    traccia("/guida.html?piano=inviato");
+    document.getElementById("ctaPiano").textContent = "Piano richiesto ✓";
+  } catch (err) {
+    errore.textContent = "Non siamo riusciti a inviare la richiesta. Riprova, oppure chiama lo 0883 596630."; errore.classList.add("on");
+  }
+  b.disabled = false; b.textContent = "Voglio il mio piano";
+});
 
 document.getElementById("pdf").addEventListener("click", function () { traccia("/guida.html?azione=pdf"); });
 </script>
