@@ -93,6 +93,86 @@ main { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: c
 #mPiano .invia { width: 100%; margin-top: 16px; border: 0; border-radius: 14px; background: #D6177A; color: #fff; font: 800 17px Inter, sans-serif; padding: 16px; cursor: pointer; }
 #mPiano .invia:disabled { opacity: .6; }
 #mPiano .ok { width: 52px; height: 52px; border-radius: 50%; background: #2FB36B; color: #fff; font-size: 28px; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+
+/* ===== versione telefono: storie ===== */
+body.modo-storie > header, body.modo-storie main, body.modo-storie .glow { display: none; }
+#storie { position: fixed; left: 0; right: 0; top: 0; bottom: calc(68px + env(safe-area-inset-bottom)); z-index: 4; overflow: hidden; background: #050507; }
+#testaStorie { position: absolute; left: 0; right: 0; top: 0; z-index: 3; padding: 10px 14px 8px; background: linear-gradient(180deg, rgba(5,5,7,.55), rgba(5,5,7,0)); }
+#barre { display: flex; gap: 3px; }
+#barre i { flex: 1; height: 3px; border-radius: 2px; background: rgba(160,160,166,.45); }
+#barre i.fatta { background: #fff; }
+#barre i.ora { background: #F03587; }
+#testaStorie .riga { display: flex; align-items: center; gap: 10px; margin-top: 9px; }
+#testaStorie img { height: 16px; }
+#numStoria { font-size: 12px; font-weight: 700; color: #A1A1A6; margin-right: auto; }
+#testaStorie button { width: 34px; height: 34px; border-radius: 50%; border: 0; background: rgba(120,120,128,.35); color: #fff; font-size: 16px; }
+.storia { position: absolute; inset: 0; display: none; flex-direction: column; padding: 74px 22px 22px; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.storia.on { display: flex; animation: entra .28s ease-out; }
+@keyframes entra { from { opacity: .3; transform: translateX(12px); } to { opacity: 1; transform: none; } }
+.storia.nero { background: radial-gradient(120% 60% at 0% 100%, rgba(240,53,135,.28), rgba(240,53,135,0) 60%), radial-gradient(90% 50% at 100% 0%, rgba(90,202,242,.18), rgba(90,202,242,0) 60%), #050507; color: #fff; }
+.storia.perla { background: #F5F5F7; color: #1D1D1F; }
+.storia > * { position: relative; }
+.storia > * { position: relative; }
+.storia .cresci { flex: 1; min-height: 14px; }
+.storia h1 { font-size: 40px; font-weight: 800; letter-spacing: -0.045em; line-height: 1.02; }
+.storia h2 { font-size: 32px; font-weight: 800; letter-spacing: -0.04em; line-height: 1.05; }
+.storia .g { color: #F03587; }
+.storia.perla .g { color: #D6177A; }
+.storia .kick { font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #A1A1A6; }
+.storia .sotto { font-size: 18px; line-height: 1.4; color: #D1D1D6; margin-top: 16px; }
+.storia .sotto b { color: #fff; }
+.storia .testo { font-size: 17px; line-height: 1.45; margin-top: 14px; color: #D1D1D6; }
+.storia.perla .testo { color: #3A3A3C; }
+.storia .testo b { color: #fff; }
+.storia.perla .testo b { color: #1D1D1F; }
+.storia .testo.grande { font-size: 21px; line-height: 1.25; font-weight: 700; letter-spacing: -0.02em; color: inherit; }
+.storia .testo.piccolo { font-size: 14px; }
+.storia .centro { text-align: center; }
+.storia .testo a { color: inherit; font-weight: 800; }
+.storia .numero { font-size: 84px; font-weight: 800; letter-spacing: -0.05em; line-height: .95; margin-top: 8px; }
+.storia .numero.medio { font-size: 46px; margin-top: 18px; }
+.storia .fonte { font-size: 12px; color: #8E8E93; margin-top: 10px; line-height: 1.4; }
+.storia.perla .fonte { color: #6E6E73; }
+.storia .dom { margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(142,142,147,.35); font-size: 20px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; }
+.storia .dom span { color: #F03587; }
+.storia .inizia { font-size: 16px; font-weight: 700; color: #fff; }
+.storia .inizia span { color: #F03587; }
+.storia .scia { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.punti { display: grid; grid-template-columns: repeat(10, 1fr); gap: 7px; margin-top: 8px; }
+.punti i { display: block; aspect-ratio: 1; border-radius: 50%; background: #D1D1D6; }
+.punti i.on { background: #D6177A; }
+.legenda { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: #3A3A3C; margin-top: 12px; }
+.legenda i { width: 12px; height: 12px; border-radius: 50%; background: #D6177A; display: inline-block; }
+.prima-dopo { display: flex; align-items: flex-end; gap: 16px; }
+.prima-dopo small { display: block; font-size: 13px; font-weight: 600; color: #6E6E73; margin-bottom: 4px; }
+.prima-dopo b { font-size: 64px; font-weight: 800; letter-spacing: -0.05em; line-height: .95; }
+.prima-dopo b.spento { color: #AEAEB2; }
+.prima-dopo .freccia { font-size: 34px; font-weight: 800; color: #D6177A; padding-bottom: 8px; }
+.mappa-s { width: 100%; height: auto; margin-top: 16px; border-radius: 14px; flex: none; }
+.contatore { display: flex; align-items: center; gap: 12px; margin-top: 14px; background: #fff; border-radius: 14px; padding: 10px 12px; }
+.contatore span { font-size: 15px; font-weight: 700; margin-right: auto; }
+.contatore button { width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid #D1D1D6; background: #fff; font-size: 22px; font-weight: 700; color: #1D1D1F; }
+.contatore b { font-size: 26px; font-weight: 800; min-width: 34px; text-align: center; color: #D6177A; }
+.storia .foto { margin: -74px -22px 18px; height: 42vh; min-height: 220px; flex: none; background-size: cover; background-position: center 55%; }
+.storia .foto::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(5,5,7,.55) 0%, rgba(5,5,7,0) 35%, rgba(5,5,7,0) 60%, #050507 100%); }
+.storia .foto span { position: absolute; left: 22px; bottom: 6px; z-index: 1; font-size: 12px; color: #A1A1A6; }
+.fotobanda { height: 26vh; min-height: 150px; flex: none; border-radius: 14px; background-size: cover; background-position: center 60%; margin-top: 16px; }
+.storia .tre { font-size: 24px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.15; }
+.storia blockquote { font-size: 25px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.15; }
+.storia .chi { font-size: 15px; font-weight: 700; color: #F03587; margin-top: 12px; }
+.video-btn { display: flex; align-items: center; gap: 14px; width: 100%; margin-top: 16px; padding: 14px 16px; border-radius: 16px; border: 0; background: rgba(255,255,255,.1); color: #fff; text-align: left; font: 800 17px Inter, sans-serif; }
+.video-btn .play { width: 46px; height: 46px; flex: none; border-radius: 50%; background: #F03587; display: flex; align-items: center; justify-content: center; font-size: 17px; padding-left: 3px; }
+.video-btn small { display: block; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #A1A1A6; margin-bottom: 2px; }
+.storia .pill { align-self: flex-start; background: #D6177A; color: #fff; font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; padding: 6px 12px; border-radius: 99px; }
+.voci { list-style: none; counter-reset: v; margin-top: 12px; }
+.voci li { counter-increment: v; position: relative; padding: 11px 0 11px 30px; border-top: 1px solid #D1D1D6; font-size: 15px; line-height: 1.35; color: #3A3A3C; }
+.voci li::before { content: counter(v); position: absolute; left: 0; top: 11px; font-weight: 800; color: #D6177A; }
+.voci b { color: #1D1D1F; }
+.domande { list-style: none; }
+.domande li { font-size: 21px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; padding: 12px 0; border-top: 1px solid #D1D1D6; }
+.cta-s { width: 100%; margin-top: 18px; border: 0; border-radius: 14px; background: #D6177A; color: #fff; font: 800 18px Inter, sans-serif; padding: 17px; flex: none; }
+.logo-s { height: 26px; align-self: flex-start; margin-bottom: 10px; }
+body.modo-storie .barra p { display: none; }
 </style>
 </head>
 <body>
@@ -114,6 +194,11 @@ main { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: c
   </div>
   <p class="suggerimento">Sfoglia trascinando l'angolo o con le frecce. I video si aprono qui.</p>
 </main>
+
+<div id="storie" hidden>
+  <div id="testaStorie"><div id="barre"></div><div class="riga"><img src="assets/csa_logo_orizzontale_bianco.svg" alt="CSA"><span id="numStoria"></span>
+    <button id="indietroS" type="button" aria-label="Schermata precedente">←</button><button id="avantiS" type="button" aria-label="Schermata successiva">→</button></div></div>
+</div>
 
 <div class="barra"><div class="riga">
   <p><b>Solo per Dentalevante:</b> il piano strategico gratuito del tuo studio, entro 3 giorni lavorativi.</p>
@@ -189,6 +274,51 @@ function traccia(percorso) {   // visita «virtuale» in HubSpot (parte solo se 
   q.push(["setPath", percorso]); q.push(["trackPageView"]);
 }
 
+
+// ===== versione telefono: storie (generata da sorgenti/guida-storie.py) =====
+const STORIE = [{"tema": "nero", "pagina": 1, "html": "<svg class=\"scia\" viewBox=\"0 0 400 800\" preserveAspectRatio=\"none\"><defs><linearGradient id=\"sp1\" x1=\"0\" x2=\"1\"><stop offset=\"0\" stop-color=\"#5ACAF2\"/><stop offset=\".52\" stop-color=\"#F03587\"/><stop offset=\"1\" stop-color=\"#F9AF1B\"/></linearGradient></defs><path d=\"M-20 690 C 90 640, 200 720, 300 650 S 400 590, 430 570\" fill=\"none\" stroke=\"url(#sp1)\" stroke-width=\"3\"/></svg><p class=\"kick\">Guida gratuita CSA</p><div class=\"cresci\"></div><h1>Come i pazienti scelgono il loro <span class=\"g\">dentista di fiducia.</span></h1><p class=\"sotto\">Solo 6 pazienti su 100 lo scelgono online. <b>Ecco come scelgono gli altri 94.</b></p><div class=\"cresci\"></div><p class=\"inizia\">Tocca per iniziare <span>→</span></p>"}, {"tema": "perla", "pagina": 3, "html": "<h2>Solo <span class=\"g\">6 pazienti su 100</span> scelgono il loro dentista online.</h2><div class=\"cresci\"></div><div class=\"punti\"><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i class=\"on\"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p class=\"legenda\"><i></i> 6 su 100 scelgono online</p><div class=\"cresci\"></div><p class=\"fonte\">Fonte: Osservatorio Compass.</p><p class=\"dom\">E gli altri 94, come ci arrivano? <span>→</span></p>"}, {"tema": "nero", "pagina": 4, "html": "<h2>Due su tre scelgono un nome <span class=\"g\">che conoscono già.</span></h2><p class=\"testo\">Glielo consiglia la famiglia, un amico, un collega. Oppure è il dentista di sempre.</p><div class=\"cresci\"></div><p class=\"numero\">67<span class=\"g\">%</span></p><p class=\"testo\"><b>dei pazienti sceglie uno studio che conosce già:</b> tramite famiglia, amici o conoscenza diretta.</p><p class=\"testo\">Il dentista non si cerca. <b>Si sceglie tra i nomi che si conoscono.</b></p><div class=\"cresci\"></div><p class=\"fonte\">Fonte: Osservatorio Compass.</p><p class=\"dom\">Allora basta il passaparola? <span>→</span></p>"}, {"tema": "perla", "pagina": 5, "html": "<h2>Il passaparola <span class=\"g\">sta calando.</span></h2><p class=\"testo\">Resta il primo modo per scegliere un dentista. Ma in quattro anni è sceso di dodici punti.</p><div class=\"cresci\"></div><div class=\"prima-dopo\"><div><small>Prima</small><b class=\"spento\">79%</b></div><span class=\"freccia\">→</span><div><small>Ultima rilevazione</small><b>67%</b></div></div><div class=\"cresci\"></div><p class=\"fonte\">Pazienti che conoscono lo studio tramite famiglia, amici o conoscenza diretta. Fonte: Osservatorio Compass.</p><p class=\"dom\">E intanto, cosa cresce? <span>→</span></p>"}, {"tema": "nero", "pagina": 6, "html": "<h2>Cresce la <span class=\"g\">scelta.</span></h2><p class=\"testo\">Ci sono più nomi in giro.</p><p class=\"numero medio\">quasi 4.000</p><p class=\"testo\">odontoiatri iscritti all'albo in Puglia.</p><p class=\"fonte\">Fonte: FNOMCeO.</p><div class=\"cresci\"></div><p class=\"testo grande\">E crescono <span class=\"g\">le catene.</span></p><p class=\"numero medio\">6% <span class=\"g\">→</span> 11%</p><p class=\"testo\">chi si è curato in un centro di catena, in quattro anni.</p><p class=\"fonte\">Fonte: Osservatorio Compass.</p><p class=\"dom\">E intorno al tuo studio, quanti sono? <span>→</span></p>"}, {"tema": "perla", "pagina": 7, "html": "<h2>Conta gli studi <span class=\"g\">intorno al tuo.</span></h2><p class=\"testo\">Il tuo studio è al centro. Quanti colleghi conosci entro un chilometro?</p><svg class=\"mappa-s\" viewBox=\"0 0 122 76\" xmlns=\"http://www.w3.org/2000/svg\" font-family=\"Inter\" >\n    <rect width=\"122\" height=\"76\" rx=\"4\" fill=\"#FFFFFF\"/>\n    <g stroke=\"#E5E5EA\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\">\n      <path d=\"M-2 30 C30 34 70 26 124 38\"/>\n      <path d=\"M44 -2 C48 25 54 50 50 78\"/>\n      <path d=\"M85 -2 C80 30 92 55 104 78\"/>\n      <path d=\"M-2 62 C35 55 80 66 124 58\"/>\n    </g>\n    <g stroke=\"#F2F2F7\" stroke-width=\"1.1\" fill=\"none\">\n      <path d=\"M10 -2 L22 78\"/><path d=\"M-2 14 L124 8\"/><path d=\"M68 -2 L64 78\"/><path d=\"M-2 46 L124 50\"/><path d=\"M110 -2 L118 78\"/>\n    </g>\n    <circle cx=\"61\" cy=\"38\" r=\"34\" fill=\"none\" stroke=\"#1D1D1F\" stroke-width=\".35\" stroke-dasharray=\"1.2 1.2\"/>\n    <circle cx=\"61\" cy=\"38\" r=\"17\" fill=\"none\" stroke=\"#1D1D1F\" stroke-width=\".35\" stroke-dasharray=\"1.2 1.2\"/>\n    <text x=\"61\" y=\"2.9\" font-size=\"2.4\" fill=\"#6E6E73\" text-anchor=\"middle\" font-weight=\"600\">1 km</text>\n    <text x=\"61\" y=\"19.9\" font-size=\"2.4\" fill=\"#6E6E73\" text-anchor=\"middle\" font-weight=\"600\">500 m</text>\n    <circle cx=\"61\" cy=\"38\" r=\"3.6\" fill=\"#D6177A\" opacity=\".18\"/>\n    <circle cx=\"61\" cy=\"38\" r=\"1.8\" fill=\"#D6177A\"/>\n    <text x=\"64.2\" y=\"41.6\" font-size=\"2.6\" fill=\"#1D1D1F\" font-weight=\"700\">Il tuo studio</text>\n  </svg><div class=\"contatore\"><span>Studi entro 1 km</span><button type=\"button\" data-conta=\"-1\" aria-label=\"Uno in meno\">−</button><b id=\"conta\">0</b><button type=\"button\" data-conta=\"1\" aria-label=\"Uno in più\">+</button></div><p class=\"testo\"><b>Chi abita vicino a te ha tutti questi studi a pochi passi. Sceglierà il nome che conosce già.</b></p><div class=\"cresci\"></div><p class=\"dom\">E un nome, come si fa a conoscerlo? <span>→</span></p>"}, {"tema": "nero", "pagina": 8, "html": "<div class=\"foto\" style=\"background-image:url(assets/guida/molfetta_viale-alberato-2.jpg)\"><span>Impianti CSA a Molfetta.</span></div><h2>Vedendolo. <span class=\"g\">Ogni giorno, nella sua città.</span></h2><p class=\"testo\">Il sito lo trova chi ti sta già cercando. I social li vede chi ti segue già. Per strada ti vedono tutti: andando al lavoro, accompagnando i figli a scuola, facendo la spesa.</p><p class=\"testo grande\"><b>Per farti scegliere, devi farti conoscere. Nella tua città.</b></p><div class=\"cresci\"></div><p class=\"dom\">E dove ti fai vedere? <span>→</span></p>"}, {"tema": "perla", "pagina": 9, "html": "<h2>Sulle strade dei <span class=\"g\">tuoi pazienti.</span></h2><div class=\"fotobanda\" style=\"background-image:url(assets/guida/molfetta_colonnine-viale-alberato.jpg)\"></div><p class=\"fonte\">Impianti CSA a Molfetta.</p><p class=\"numero medio\">Oltre <span class=\"g\">2.100</span></p><p class=\"testo\"><b>impianti autorizzati in 36 città, dal nord barese all'area di Bari.</b></p><p class=\"testo piccolo\">Cartelli e paline vicino allo studio, preinsegne per chi è in una via laterale, poster 6x3 sulle strade che portano da te, MUPI nelle zone pedonali, centri commerciali.</p><div class=\"cresci\"></div><p class=\"tre\">Pensiamo il piano.<br>Stampiamo.<br>Montiamo noi.</p><p class=\"dom\">Chi l'ha già fatto con noi? <span>→</span></p>"}, {"tema": "nero", "pagina": 10, "html": "<p class=\"kick\">Chi l'ha già fatto · 1 di 4 · Farsi conoscere</p><p class=\"sotto\" style=\"margin-top:10px\">Quattro clienti CSA. Nessuno è uno studio dentistico, ma tutti vivono della stessa cosa: la fiducia della loro città.</p><div class=\"cresci\"></div><blockquote>\"Mi hanno consigliato e riservato i posti migliori, offrendomi un servizio di pianificazione che ha portato tutta la zona industriale a conoscermi dopo solo pochi mesi.\"</blockquote><p class=\"chi\">Zincomet</p><div class=\"cresci\"></div><p class=\"testo\">È proprio quello che serve a uno studio: che la città conosca il tuo nome prima del momento della scelta.</p><button class=\"video-btn\" type=\"button\" data-video=\"10\"><span class=\"play\">▶</span><span><small>Guarda il video · 1:36</small>Zincomet</span></button><p class=\"fonte\">Esperienza riferita dal cliente: non è una previsione per il tuo studio.</p>"}, {"tema": "nero", "pagina": 11, "html": "<p class=\"kick\">Chi l'ha già fatto · 2 di 4 · Esserci sempre</p><div class=\"cresci\"></div><blockquote>\"Impianti visibili e ben posizionati. CSA ci ha dato la possibilità di essere veramente onnipresenti\".</blockquote><p class=\"chi\">Montrone, caseificio di Andria</p><div class=\"cresci\"></div><p class=\"testo\">Il passaparola sceglie il nome che si ricorda. Esserci con costanza, sulle strade dei tuoi pazienti, è il modo per restare quel nome.</p><button class=\"video-btn\" type=\"button\" data-video=\"11\"><span class=\"play\">▶</span><span><small>Guarda il video · 1:42</small>Montrone</span></button>"}, {"tema": "nero", "pagina": 12, "html": "<p class=\"kick\">Chi l'ha già fatto · 3 di 4 · Il posto giusto</p><div class=\"cresci\"></div><blockquote>\"Sono rimasto stupito dalla loro professionalità, disponibilità e collaborazione, facendoci capire la potenzialità e l'importanza del posizionamento. Sicuramente saranno in grado di consigliarvi al meglio la soluzione più adatta a voi.\"</blockquote><p class=\"chi\">Chiarappa Impianti, Modugno</p><div class=\"cresci\"></div><p class=\"testo\">Ogni posizione ha il suo motivo: la strada, il percorso, chi la percorre ogni giorno. Scegli sapendo perché.</p><button class=\"video-btn\" type=\"button\" data-video=\"12\"><span class=\"play\">▶</span><span><small>Guarda il video · 1:26</small>Chiarappa Impianti</span></button>"}, {"tema": "nero", "pagina": 13, "html": "<p class=\"kick\">Chi l'ha già fatto · 4 di 4 · Un solo interlocutore</p><div class=\"cresci\"></div><blockquote>\"Abbiamo trovato un partner a 360°. Abbiamo riscontrato un incremento del 15% del fatturato\".</blockquote><p class=\"chi\">FG Service, forniture industriali e utensileria</p><div class=\"cresci\"></div><p class=\"testo\">Dall'analisi al montaggio pensiamo a tutto noi. Tu continui a fare il tuo lavoro.</p><button class=\"video-btn\" type=\"button\" data-video=\"13\"><span class=\"play\">▶</span><span><small>Guarda il video · 2:17</small>FG Service</span></button><p class=\"fonte\">Risultato riferito dal cliente: ogni attività è diversa, non è una previsione per il tuo studio.</p>"}, {"tema": "perla", "pagina": 14, "html": "<h2>Ogni città ha <span class=\"g\">le sue strade.</span></h2><p class=\"testo\">Farsi conoscere non vuol dire farsi vedere ovunque. Vuol dire farsi vedere sulle strade che i tuoi pazienti fanno ogni giorno. E quelle strade dipendono dal tuo studio.</p><div class=\"cresci\"></div><ul class=\"domande\"><li>Da dove arrivano i tuoi pazienti?</li><li>Quanti colleghi hai intorno?</li><li>Dove ha senso far vedere il tuo nome?</li></ul><div class=\"cresci\"></div><p class=\"testo grande\"><b>Per questo serve un piano.</b> Su misura per il tuo studio.</p><p class=\"dom\">Chi lo prepara? <span>→</span></p>"}, {"tema": "perla", "pagina": 15, "html": "<span class=\"pill\">Solo per Dentalevante 2026</span><h2 style=\"margin-top:12px\">Lo prepariamo noi. <span class=\"g\">Gratis.</span></h2><p class=\"testo\">Come fai tu con una panoramica: prima la diagnosi, poi il piano di trattamento. Il piano strategico del tuo studio contiene:</p><ol class=\"voci\"><li><b>I tuoi pazienti.</b> Da quali vie e percorsi arrivano.</li><li><b>I colleghi intorno a te.</b> Contati, nel raggio di 1–2 km.</li><li><b>Dove farti vedere.</b> Le posizioni e i formati adatti, ognuno con il suo motivo.</li><li><b>Tre scenari.</b> Tre livelli di investimento. Scegli tu se e quale.</li></ol><div class=\"cresci\"></div><button class=\"cta-s\" type=\"button\" data-piano-s=\"pagina-15\">Richiedi il piano gratuito →</button><p class=\"testo piccolo centro\">Te lo mandiamo entro 3 giorni lavorativi. Non ti impegna a nulla.<br>Oppure chiama lo <a href=\"tel:+390883596630\">0883 596630</a></p>"}, {"tema": "nero", "pagina": 16, "html": "<div class=\"cresci\"></div><h2>Prima di sceglierti, devono <span class=\"g\">conoscerti.</span></h2><p class=\"testo\">Richiedi il piano strategico gratuito: <b>scopri come far conoscere il tuo studio nella tua città.</b></p><button class=\"cta-s\" type=\"button\" data-piano-s=\"pagina-16\">Richiedi il piano gratuito →</button><p class=\"testo piccolo centro\">oppure chiama lo <a href=\"tel:+390883596630\">0883 596630</a></p><div class=\"cresci\"></div><img class=\"logo-s\" src=\"assets/csa_logo_orizzontale_bianco.svg\" alt=\"CSA\"><p class=\"fonte\">C.S.A. S.r.l. · Concessionaria di pubblicità esterna · Andria (BT)</p><p class=\"fonte\"><b>Come è fatta questa guida.</b> CSA ha raccolto e messo in fila i dati pubblici sulla scelta del dentista: Osservatorio Compass e FNOMCeO. Le conclusioni e le proposte sono di CSA. Novembre 2026.</p>"}];
+let attuale = 0;
+function vaiStoria(n) {
+  const el = document.querySelectorAll("#storie .storia");
+  if (n < 0 || n >= el.length) return;
+  el[attuale].classList.remove("on"); attuale = n; el[n].classList.add("on"); el[n].scrollTop = 0;
+  document.querySelectorAll("#barre i").forEach(function (b, k) { b.className = k < n ? "fatta" : (k === n ? "ora" : ""); });
+  document.getElementById("numStoria").textContent = (n + 1) + " / " + el.length;
+  if (STORIE[n].pagina === 15 && !vaiStoria.vista15) { vaiStoria.vista15 = true; traccia("/guida.html?pagina=15"); }
+}
+function avviaStorie() {
+  document.body.classList.add("modo-storie");
+  const box = document.getElementById("storie"); box.hidden = false;
+  const barre = document.getElementById("barre");
+  STORIE.forEach(function (st, k) {
+    const d = document.createElement("section"); d.className = "storia " + st.tema; d.innerHTML = st.html;
+    d.setAttribute("aria-label", "Schermata " + (k + 1) + " di " + STORIE.length);
+    box.appendChild(d); barre.appendChild(document.createElement("i"));
+  });
+  box.querySelectorAll("[data-video]").forEach(function (b) { b.addEventListener("click", function () { apriVideo(VIDEO[b.dataset.video]); }); });
+  box.querySelectorAll("[data-piano-s]").forEach(function (b) { b.addEventListener("click", function () { apriPiano(b.dataset.pianoS); }); });
+  let conta = 0;
+  box.querySelectorAll("[data-conta]").forEach(function (b) { b.addEventListener("click", function () { conta = Math.max(0, conta + Number(b.dataset.conta)); document.getElementById("conta").textContent = conta; }); });
+  // tocco: a sinistra indietro, altrove avanti (non su pulsanti, link e contatore)
+  box.addEventListener("click", function (e) {
+    if (e.target.closest("a, button, .contatore, #testaStorie")) return;
+    vaiStoria(attuale + (e.clientX / window.innerWidth < 0.3 ? -1 : 1));
+  });
+  let x0 = null, y0 = null;
+  box.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+  box.addEventListener("touchend", function (e) {
+    if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0; x0 = null;
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) { vaiStoria(attuale + (dx < 0 ? 1 : -1)); e.preventDefault(); }
+  });
+  document.getElementById("indietroS").addEventListener("click", function () { vaiStoria(attuale - 1); });
+  document.getElementById("avantiS").addEventListener("click", function () { vaiStoria(attuale + 1); });
+  box.querySelector(".storia").classList.add("on"); vaiStoria(0);
+}
+
+// Su telefono la pagina A5 è troppo piccola per leggerla: lì la guida diventa una sequenza di schermate (storie).
+const MOBILE = window.matchMedia("(max-width: 760px)").matches;
+let flip = null;
+function avviaLibro() {
 const libro = document.getElementById("libro");
 for (let i = 1; i <= N; i++) {
   const d = document.createElement("div");
@@ -219,7 +349,7 @@ const RAPPORTO = 1100 / 1559;
 const hMax = Math.max(360, Math.min(878, window.innerHeight - 250));
 const wMax = Math.round(hMax * RAPPORTO);
 libro.style.maxWidth = (window.innerWidth >= 900 ? wMax * 2 : wMax) + "px"; libro.style.width = "100%";
-const flip = new St.PageFlip(libro, {
+flip = new St.PageFlip(libro, {
   width: 550, height: 779, size: "stretch",
   minWidth: 200, maxWidth: wMax, minHeight: 280, maxHeight: hMax,
   showCover: true, usePortrait: true, mobileScrollSupport: true,
@@ -243,10 +373,15 @@ flip.on("flip", aggiorna); flip.on("changeOrientation", aggiorna); flip.on("init
 setTimeout(aggiorna, 300);
 prima.addEventListener("click", function () { flip.flipPrev(); });
 dopo.addEventListener("click", function () { flip.flipNext(); });
+
+
+}
+if (MOBILE) avviaStorie(); else avviaLibro();
 document.addEventListener("keydown", function (e) {
   if (document.getElementById("modal").classList.contains("on")) { if (e.key === "Escape") chiudiVideo(); return; }
   if (document.getElementById("mPiano").classList.contains("on")) return;
-  if (e.key === "ArrowRight") flip.flipNext(); if (e.key === "ArrowLeft") flip.flipPrev();
+  if (flip) { if (e.key === "ArrowRight") flip.flipNext(); if (e.key === "ArrowLeft") flip.flipPrev(); }
+  else { if (e.key === "ArrowRight") vaiStoria(attuale + 1); if (e.key === "ArrowLeft") vaiStoria(attuale - 1); }
 });
 
 // finestra video
