@@ -140,9 +140,14 @@ for (let i = 1; i <= N; i++) {
   libro.appendChild(d);
 }
 
+// il libro deve stare tutto nello schermo: altezza massima = finestra meno intestazione, comandi e barra in basso
+const RAPPORTO = 1100 / 1559;
+const hMax = Math.max(360, Math.min(878, window.innerHeight - 250));
+const wMax = Math.round(hMax * RAPPORTO);
+libro.style.maxWidth = (window.innerWidth >= 900 ? wMax * 2 : wMax) + "px"; libro.style.width = "100%";
 const flip = new St.PageFlip(libro, {
   width: 550, height: 779, size: "stretch",
-  minWidth: 260, maxWidth: 620, minHeight: 368, maxHeight: 878,
+  minWidth: 200, maxWidth: wMax, minHeight: 280, maxHeight: hMax,
   showCover: true, usePortrait: true, mobileScrollSupport: true,
   maxShadowOpacity: 0.35, flippingTime: 700, clickEventForward: true, startZIndex: 1
 });
