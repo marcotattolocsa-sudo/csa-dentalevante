@@ -432,6 +432,11 @@ document.getElementById("torna").addEventListener("click", chiudiPiano);
 mPiano.addEventListener("click", function (e) { if (e.target === mPiano) chiudiPiano(); });
 document.addEventListener("keydown", function (e) { if (e.key === "Escape" && mPiano.classList.contains("on")) chiudiPiano(); });
 
+function canaleHS(azione) {
+  const s = (new URLSearchParams(location.search).get("utm_source") || "").toLowerCase();
+  const nomi = { volantino: "volantino", rollup: "roll-up", cartolina: "cartolina", "guida-web": "guida online", "guida-video": "video della guida", "mail-guida": "mail della guida", "mail-piano": "mail del piano", promemoria: "mail promemoria", grazie: "pagina di ringraziamento", "grazie-piano": "pagina di ringraziamento" };
+  return azione + " · da " + (nomi[s] || (s ? s : "indirizzo digitato, senza QR"));
+}
 function cookie(n) { const m = document.cookie.match(new RegExp("(?:^|; )" + n + "=([^;]*)")); return m ? m[1] : ""; }
 modulo.addEventListener("submit", async function (e) {
   e.preventDefault(); errore.classList.remove("on");
@@ -455,7 +460,7 @@ modulo.addEventListener("submit", async function (e) {
   const campi = { email: v("email"), firstname: parti.shift() || "", lastname: parti.join(" "), mobilephone: v("cellulare"), company: v("nomestudio"), city: v("comune"), message: righe.join("\n") };
   const corpo = {
     fields: Object.keys(campi).map(function (k) { return { objectTypeId: "0-1", name: k, value: campi[k] }; }),
-    context: Object.assign({ pageUri: location.href, pageName: document.title }, cookie("hubspotutk") ? { hutk: cookie("hubspotutk") } : {}),
+    context: Object.assign({ pageUri: location.href, pageName: canaleHS("Guida online (piano)") }, cookie("hubspotutk") ? { hutk: cookie("hubspotutk") } : {}),
     legalConsentOptions: { consent: { consentToProcess: true, text: "Acconsento al trattamento dei miei dati da parte di C.S.A. S.r.l. per ricevere quanto richiesto ed essere ricontattato." } }
   };
   const b = document.getElementById("invia"); b.disabled = true; b.textContent = "Invio in corso…";

@@ -155,13 +155,18 @@ const HUBSPOT = {
   portalId: "145641356",
   moduloPiano: "ba811dc5-2bdd-489e-9659-ebe8396bdb22"   // Dentalevante 2026 · Landing 2 · Richiedi il piano
 };
+function canaleHS(azione) {
+  const s = (new URLSearchParams(location.search).get("utm_source") || "").toLowerCase();
+  const nomi = { volantino: "volantino", rollup: "roll-up", cartolina: "cartolina", "guida-web": "guida online", "guida-video": "video della guida", "mail-guida": "mail della guida", "mail-piano": "mail del piano", promemoria: "mail promemoria", grazie: "pagina di ringraziamento", "grazie-piano": "pagina di ringraziamento" };
+  return azione + " · da " + (nomi[s] || (s ? s : "indirizzo digitato, senza QR"));
+}
 function cookie(n) { const m = document.cookie.match(new RegExp("(?:^|; )" + n + "=([^;]*)")); return m ? m[1] : ""; }
 async function inviaHubSpot(modulo, d, righeMessaggio) {
   const parti = d.nome.trim().split(/\s+/);
   const campi = { email: d.email, firstname: parti.shift() || "", lastname: parti.join(" "), mobilephone: d.cellulare, company: d.studio, city: d.comune, message: righeMessaggio.filter(Boolean).join("\n") };
   const corpo = {
     fields: Object.keys(campi).map(function (k) { return { objectTypeId: "0-1", name: k, value: campi[k] }; }),
-    context: Object.assign({ pageUri: location.href, pageName: document.title }, cookie("hubspotutk") ? { hutk: cookie("hubspotutk") } : {}),
+    context: Object.assign({ pageUri: location.href, pageName: canaleHS("Landing 2 (piano)") }, cookie("hubspotutk") ? { hutk: cookie("hubspotutk") } : {}),
     legalConsentOptions: { consent: { consentToProcess: true, text: "Acconsento al trattamento dei miei dati da parte di C.S.A. S.r.l. per ricevere quanto richiesto ed essere ricontattato." } }
   };
   const r = await fetch("https://api-eu1.hsforms.com/submissions/v3/integration/submit/" + HUBSPOT.portalId + "/" + modulo, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(corpo) });
