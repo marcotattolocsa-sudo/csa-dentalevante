@@ -9,8 +9,8 @@
   14c · Pagina INTERNA per gli agenti allo stand · 12/11/2026. Non è linkata da nessuna parte: si apre da
   https://dentisti.csapubblicita.it/stand.html (salvarla nella schermata Home del telefono).
   L'agente compila mentre parla con il dentista. Invio a HubSpot sugli stessi moduli delle landing, così partono le mail automatiche:
-    - solo guida  → modulo «Landing 1 · Scarica la guida»  → mail 1 (guida + invito al piano)
-    - guida+piano → modulo «Landing 2 · Richiedi il piano» → mail 2 (piano in preparazione + link alla guida)
+    - «La guida»  → modulo «Landing 1 · Scarica la guida»  → mail 1 (guida + invito al piano). Scelta di default nel dubbio.
+    - «Il piano strategico» (solo se il dentista ha detto sì) → modulo «Landing 2 · Richiedi il piano» → mail 2 (piano in preparazione + link alla guida)
   Agente: Riccardo Vitti o Annarosa Ieva (utenti HubSpot; il valore è il loro ID proprietario). Il proprietario NON si può impostare dal modulo
   (HubSpot non accetta campi «utente» nei moduli): si assegna in blocco da Contatti, filtro «Messaggio contiene inserito da <nome>».
   Gli invii dello stand si distinguono da quelli spontanei per:
@@ -106,10 +106,11 @@ button.nuovo { width: 100%; margin-top: 20px; font: 800 18px Inter, sans-serif; 
   </div>
 
   <div class="card">
-    <h2>Cosa vuole ricevere</h2>
+    <h2>Cosa gli mandiamo</h2>
+    <p style="font-size:14px;color:var(--p2);margin:-4px 0 12px">Scegli in base a cosa ti ha detto il dentista. Nel dubbio, la guida.</p>
     <div class="scelte grandi">
-      <label><input type="radio" name="richiesta" value="guida"><span>Solo la guida gratuita<small>Riceve la mail con la guida e l'invito al piano</small></span></label>
-      <label><input type="radio" name="richiesta" value="piano"><span>La guida e il piano strategico gratuito<small>Riceve la mail del piano (con la guida). Piano entro 3 giorni lavorativi</small></span></label>
+      <label><input type="radio" name="richiesta" value="guida"><span>La guida<small>Ha preso la guida o vuole leggerla. Gli arriva la mail con la guida e l'invito a chiedere il piano.</small></span></label>
+      <label><input type="radio" name="richiesta" value="piano"><span>Il piano strategico del suo studio<small>Solo se ti ha detto sì al piano. Glielo prepariamo e mandiamo entro 3 giorni lavorativi.</small></span></label>
     </div>
     <div class="gruppo" style="margin-top:14px">
       <p>Guida già data a mano?</p>
@@ -270,7 +271,7 @@ modulo.addEventListener("submit", async function (e) {
   document.getElementById("fattoTitolo").textContent = inCoda ? "Salvato, da inviare." : "Contatto registrato.";
   const li = [
     d.nome + " · " + d.studio + ", " + d.comune,
-    d.richiesta === "piano" ? "Gli arriva la mail del piano, con il link alla guida. Piano entro 3 giorni lavorativi." : "Gli arriva la mail con la guida e l'invito al piano.",
+    d.richiesta === "piano" ? "Ha chiesto il piano: gli arriva la mail di conferma, il piano entro 3 giorni lavorativi." : "Gli arriva la mail con la guida e l'invito a chiedere il piano.",
     "Consenso proposte commerciali: " + (d.consenso_marketing ? "sì" : "no")
   ];
   document.getElementById("fattoDettagli").innerHTML = "";
