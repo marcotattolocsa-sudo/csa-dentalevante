@@ -99,7 +99,7 @@ button.nuovo { width: 100%; margin-top: 20px; font: 800 18px Inter, sans-serif; 
     <input type="text" id="nomestudio" autocomplete="off" autocapitalize="words">
     <label class="campo" for="comune">Comune</label>
     <input type="text" id="comune" autocomplete="off" autocapitalize="words">
-    <label class="campo" for="cellulare">Cellulare</label>
+    <label class="campo" for="cellulare">Cellulare del dentista <span style="font-weight:500;color:var(--p2)">· facoltativo, mai il tuo</span></label>
     <input type="tel" id="cellulare" autocomplete="off" inputmode="tel">
     <label class="campo" for="email">Email (gli mandiamo lì la guida)</label>
     <input type="email" id="email" autocomplete="off" autocapitalize="off" spellcheck="false">
@@ -180,6 +180,7 @@ function corpoHubSpot(d) {
     "Tipo: " + (d.tipo || "non indicato"),
     "Sedi: " + (d.sede || "non indicato"),
     "Fascia oraria preferita: " + (d.fascia || "non indicata"),
+    d.cellulare ? "" : "Cellulare: non dato",
     d.note ? "Note: " + d.note : "",
     "Fonte: Dentalevante 2026 · stand (inserimento agente)",
     "Consenso marketing: " + (d.consenso_marketing ? "sì" : "no"),
@@ -187,7 +188,7 @@ function corpoHubSpot(d) {
   ].filter(Boolean);
   const campi = { email: d.email, firstname: parti.shift() || "", lastname: parti.join(" "), mobilephone: d.cellulare, company: d.studio, city: d.comune, message: righe.join("\n") };
   return {
-    fields: Object.keys(campi).map(function (k) { return { objectTypeId: "0-1", name: k, value: campi[k] }; }),
+    fields: Object.keys(campi).filter(function (k) { return campi[k] !== ""; }).map(function (k) { return { objectTypeId: "0-1", name: k, value: campi[k] }; }),
     context: { pageUri: PAGINA, pageName: "Dentalevante 2026 · Stand · inserimento agente" },
     legalConsentOptions: { consent: { consentToProcess: true, text: "Acconsento al trattamento dei miei dati da parte di C.S.A. S.r.l. per ricevere quanto richiesto ed essere ricontattato." } }
   };
@@ -234,14 +235,14 @@ modulo.addEventListener("submit", async function (e) {
   const bad = [];
   ["nome", "nomestudio", "comune", "cellulare", "email"].forEach(function (id) {
     const el = document.getElementById(id); let ok = !!el.value.trim();
-    if (ok && id === "cellulare") ok = el.value.replace(/\D/g, "").length >= 9;
+    if (id === "cellulare") ok = !el.value.trim() || el.value.replace(/\D/g, "").length >= 9;  // facoltativo: se c'è, almeno 9 cifre
     if (ok && id === "email") ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim());
     el.setAttribute("aria-invalid", ok ? "false" : "true"); if (!ok) bad.push(el);
   });
   const richiesta = scelta("richiesta");
   const ag = modulo.querySelector("input[name=agente]:checked");
   if (!ag || bad.length || !richiesta) {
-    errore.textContent = !ag ? "Scegli chi sei: Riccardo o Annarosa." : bad.length ? "Controlla i campi evidenziati (cellulare almeno 9 cifre, email valida)." : "Scegli cosa vuole ricevere: solo la guida, o guida e piano.";
+    errore.textContent = !ag ? "Scegli chi sei: Riccardo o Annarosa." : bad.length ? "Controlla i campi evidenziati (email valida; il cellulare, se lo scrivi, almeno 9 cifre)." : "Scegli cosa gli mandiamo: la guida o il piano.";
     errore.classList.add("on"); if (bad[0]) bad[0].focus(); return;
   }
   const d = {
